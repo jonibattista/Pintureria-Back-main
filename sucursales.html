@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Sucursales</title>
+    <style>
+        #sucData {display: none;}
+    </style>
+</head>
+<body style="background-color: navajowhite;">
+     <header>
+        <nav>
+            <img src="rio color.png" title="Rio color">
+        </nav>
+     </header>
+    <h1>Sucursales</h1>
+    <button id="b_new" style="display: block;"><strong>Nueva sucursal</strong></button><br><br>
+    <div id="sucData"> 
+        <form  method="post" target="_blank" accept-charset="utf-8">
+            <br><input type="text" name="Direccion" placeholder="Direccion" id="dir" required><br><br>
+            <input type="tel" name="telefono" placeholder="Telefono" id="tele" required><br><br>
+            <button id="b_carga">Cargar datos</button><br><br>
+        </form>
+    </div>
+    <button id="b_show" style="display: block;"><strong> Mostrar sucursales</strong></button><br><br>
+    <button id="cerrarLista" style="display: none; color: rgb(243, 58, 234);" ><strong >Cerrar</strong></button>
+    <ul id="muestraSuc" style="display: none;"></ul>  
+    <button id="b_mod" style="display: block;"><strong>Modificar sucursal</strong> </button><br><br>
+    <button id="b_del" style="display: block;"><strong>Eliminar sucursal</strong> </button><br><br>
+</body>
+<script src="CRUD_Sucursal.2.js"></script>
+</html>
