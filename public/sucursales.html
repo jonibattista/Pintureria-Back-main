@@ -5,9 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sucursales</title>
     <style>
-        #sucData {
-            display: none;
-        }
+        #sucData {display: none;}
     </style>
 </head>
 <body>
@@ -17,15 +15,18 @@
         </nav>
      </header>
     <h1>Sucursales</h1>
-    <button id="b_new">Nueva sucursal</button><br>
-    <form  id="sucData" method="post" target="_blank" accept-charset="utf-8">
-        <br><input type="text" name="Direccion" placeholder="Direccion"><br><br>
-        <input type="tel" name="telefono" placeholder="Telefono"><br><br>
-        <input type="submit"><br><br>
-    </form>
-    <button id="b_show">Mostrar sucursales</button><br>
-    <button id="b_mod">Modificar sucursal</button><br>
-    <button id="b_del">Eliminar sucursal</button><br>
+    <button id="b_new" style="display: block;"><strong>Nueva sucursal</strong></button><br><br>
+    <div id="sucData"> 
+        <form  method="post" target="_blank" accept-charset="utf-8">
+            <br><input type="text" name="Direccion" placeholder="Direccion" id="dir"><br><br>
+            <input type="tel" name="telefono" placeholder="Telefono" id="tele"><br><br>
+            <button id="b_carga">Cargar datos</button><br><br>
+        </form>
+    </div>
+    <button id="b_show" style="display: block;"><strong> Mostrar sucursales</strong></button><br><br>
+    <div id="muestraSuc" style="display: none;"></div>  
+    <button id="b_mod" style="display: block;"><strong>Modificar sucursal</strong> </button><br><br>
+    <button id="b_del" style="display: block;"><strong>Eliminar sucursal</strong> </button><br><br>
 </body>
 <script src="CRUD_Sucursal.2.js"></script>
 </html>
