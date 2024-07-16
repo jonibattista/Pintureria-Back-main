@@ -7,7 +7,8 @@ const form = document.getElementById('sucData');
 const dir = document.getElementById('dir');
 const tel = document.getElementById('tele');
 const enviar = document.getElementById('b_carga');
-const contenedor = document.getElementById('muestraSuc');
+const listSuc = document.getElementById('muestraSuc');
+const cerrarListaSuc = document.getElementById('cerrarLista');
 
 b_new.addEventListener('click', () => {
   showForm();
@@ -38,6 +39,11 @@ enviar.addEventListener('click', () => {
   p.creatSucursal(direc, ntel);
 });
 
+cerrarListaSuc.addEventListener('click', () => {
+  showDivSucursales();
+});
+
+
 //Creacion de Clases y metodos
 
 class Pintureria {
@@ -57,9 +63,15 @@ class Pintureria {
   // Muestra las sucursales cargadas
   showSucursal() {
     this.sucursales.forEach((sucursal) => {
-      contenedor.innerHTML = '<a>ID Sucursal: </a>' + sucursal.id;
-      contenedor.innerHTML = '<a>Direccion: </a>' + sucursal.direccion;
-      contenedor.innerHTML = '<a>Telefono: </a>' + sucursal.telefono;
+      const li = document.createElement("li")
+      const d = document.createElement("a")
+      const t = document.createElement("a")
+      li.innerHTML = '<strong>ID: </strong>'+ sucursal.id;
+      d.innerHTML = '<strong>Dirección: </strong>'+ sucursal.direccion;
+      t.innerHTML = '<br><strong>Telefono: </strong>'+ sucursal.telefono;
+      listSuc.appendChild(li);
+      listSuc.appendChild(d);
+      listSuc.appendChild(t);
     });
   }
 
@@ -126,19 +138,21 @@ function showForm() {
 }
 
 function showDivSucursales() {
-  if (contenedor.style.display == 'block') {
-    contenedor.style.display = 'none';
-    b_new.style.display = 'block';
+  if (listSuc.style.display == 'block') {
+    listSuc.style.display = 'none';
     b_show.style.display = 'block';
+    b_new.style.display = 'block';
     b_mod.style.display = 'block';
     b_del.style.display = 'block';
-    b_show.innerHTML = '<strong>Mostrar sucursales</strong>';
-  } else {
-    contenedor.style.display = 'block';
+    cerrarListaSuc.style.display = 'none';
+  } 
+  else {
+    listSuc.style.display = 'block';
+    b_show.style.display = 'none';
     b_new.style.display = 'none';
     b_mod.style.display = 'none';
     b_del.style.display = 'none';
-    b_show.innerHTML = '<strong style = "color:red">Cerrar</strong>';
+    cerrarListaSuc.style.display = 'block';
   }
 }
 const p = new Pintureria('Rio Color');
