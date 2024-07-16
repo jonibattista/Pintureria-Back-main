@@ -3,14 +3,15 @@ const b_new = document.getElementById('b_new');
 const b_show = document.getElementById('b_show');
 const b_mod = document.getElementById('b_mod');
 const b_del = document.getElementById('b_del');
+const form = document.getElementById('sucData');
 
 b_new.addEventListener('click', () => {
-  p.creatSucursal();
+  showForm();
+  //  p.creatSucursal();
   console.log('nueva sucursal');
 });
 
 b_show.addEventListener('click', () => {
-  //
   p.showSucursal();
   // console.log('mostrar sucursal numero:');
 });
@@ -55,30 +56,20 @@ class Pintureria {
     }
   }
 
+  // Muestra las sucursales cargadas
   showSucursal() {
-    // Muestra las sucursales cargadas
     this.sucursales.forEach((sucursal) => console.log(sucursal));
   }
 
-  /*
-  showSucursal(idSuc) {
-    let f = this.sucursales.find((sucursal) => sucursal.id === idSuc);
-    if (typeof f !== undefined) {
-      console.log(f);
-      return 0;
-    }
-    console.error('No se encontro la sucursal solicitada');
-  }
-*/
+  //Busca una sucursal por id
   searchSucursal(idsuc) {
-    //Busca una sucursal por id
     const f = this.sucursales.find((sucursal) => sucursal.id === idsuc);
     console.log(f);
     return f;
   }
 
+  //Elimina una sucursal
   delSucursal(id) {
-    //Elimina una sucursal
     const suc = this.sucursales.findIndex((sucursal) => sucursal.id === id);
     if (suc !== -1) {
       this.sucursales.splice(suc, 1);
@@ -87,8 +78,8 @@ class Pintureria {
     return 0;
   }
 
+  //Actualiza una sucursal
   updateSucursal(id) {
-    //Actualiza una sucursal
     const suc = this.searchSucursal(id);
     console.log(suc);
     if (suc !== undefined) {
@@ -106,10 +97,23 @@ class Sucursal {
   direccion;
   telefono;
   productos = [];
+  personas = [];
+  ventas = [];
   constructor(id, direccion, telefono) {
     this.id = id;
     this.direccion = direccion;
     this.telefono = telefono;
+  }
+}
+
+//Muestra y oculta el formulario de sucursales
+function showForm() {
+  if (form.style.display === 'none') {
+    form.style.display = 'block';
+    b_new.innerHTML = '<strong style = "color:red">Cancelar</strong>';
+  } else {
+    form.style.display = 'none';
+    b_new.innerHTML = '<a>Nueva sucursal</a>';
   }
 }
 

@@ -4,7 +4,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Sucursales</title>
-    
+    <style>
+        #sucData {
+            display: none;
+        }
+    </style>
 </head>
 <body>
      <header>
@@ -13,10 +17,15 @@
         </nav>
      </header>
     <h1>Sucursales</h1>
-    <button id="b_new">Nueva sucursal</button>
-    <button id="b_show">Mostrar sucursal</button>
-    <button id="b_mod">Modificar sucursal</button>
-    <button id="b_del">Eliminar sucursal</button>
+    <button id="b_new">Nueva sucursal</button><br>
+    <form  id="sucData" method="post" target="_blank" accept-charset="utf-8">
+        <br><input type="text" name="Direccion" placeholder="Direccion"><br><br>
+        <input type="tel" name="telefono" placeholder="Telefono"><br><br>
+        <input type="submit"><br><br>
+    </form>
+    <button id="b_show">Mostrar sucursales</button><br>
+    <button id="b_mod">Modificar sucursal</button><br>
+    <button id="b_del">Eliminar sucursal</button><br>
 </body>
 <script src="CRUD_Sucursal.2.js"></script>
 </html>
