@@ -1,0 +1,90 @@
+###  ---------------- SUCURSALES -----------------------
+GET http://localhost:3000/allSucursal HTTP/1.1
+
+###
+GET http://localhost:3000/allSucursal/2 HTTP/1.1
+
+###
+POST http://localhost:3000/allSucursal HTTP/1.1
+Content-Type: application/json
+
+{
+    "telefono": 3412222333,
+    "direccion": "Lainezsss 13"
+}
+
+###
+PUT http://localhost:3000/allSucursal/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "telefono": 3412222333,
+    "direccion": "Dirreccn"
+}
+
+###
+DELETE http://localhost:3000/allSucursal/8 HTTP/1.1
+
+
+
+###  ---------------- PRODUCTOS -----------------------
+GET http://localhost:3000/allProducto HTTP/1.1
+
+###
+GET http://localhost:3000/allProducto/2 HTTP/1.1
+
+###
+POST http://localhost:3000/allProducto HTTP/1.1
+Content-Type: application/json
+
+{
+    "descripcion": "Esmalte Distincion",
+    "precio": 15000,
+    "stock": 18
+}
+
+###
+PUT http://localhost:3000/allProducto/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "descripcion": "Esmalte Casablanca",
+    "precio": 15000,
+    "stock": 18
+}
+
+###
+DELETE http://localhost:3000/allProducto/3 HTTP/1.1
+
+
+
+###  ---------------- USUARIOS -----------------------
+GET http://localhost:3000/allUsuario HTTP/1.1
+
+###
+GET http://localhost:3000/allUsuario/2 HTTP/1.1
+
+###
+POST http://localhost:3000/allUsuario HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Luka123",
+    "email": "luka@gmail.com",
+    "psw": "123"
+}
+
+###
+PUT http://localhost:3000/allUsuario/3 HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Luka123456",
+    "email": "luka@gmail.com",
+    "psw": "123"
+}
+
+###
+DELETE http://localhost:3000/allUsuario/3 HTTP/1.1
+
+

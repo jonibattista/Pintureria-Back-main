@@ -1,3 +1,4 @@
+/*
 document.getElementById('empleadoForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -10,4 +11,4 @@ document.getElementById('empleadoForm').addEventListener('submit', function(e) {
 function registrarEmpleado(num, password) {
     
 
-}
+}*/

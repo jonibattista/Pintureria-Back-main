@@ -1,19 +1,39 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { routerSuc } from './Sucursales/Sucursales.routes.js';
+import { routerProd } from './Productos/Productos.routes.js';
+import { routerUsu } from './Usuarios/Usuario.routes.js';
 
-const app = express();
+const port = 3000;
+
+//Abre servidor con Express
+export const app = express();
+
+//middleware para obtener el cuerpo de los formulario
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Obtener el nombre del archivo y el directorio actual
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Servir archivos estáticos desde la carpeta 'public'
+// Archivos estáticos desde la carpeta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Define una ruta simple
+app.use('/allSucursal', routerSuc);
+app.use('/allProducto', routerProd);
+app.use('/allUsuario', routerUsu);
+
+// Define las rutas
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+app.get('/Registro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'registro.html'));
+});
+app.get('/Sucursal', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'Sucursal.html'));
 });
 app.get('/carrito', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'carrito.html'));
@@ -26,9 +46,6 @@ app.get('/perfil', (req, res) => {
 });
 app.get('/tienda', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'tienda.html'));
-});
-app.get('/sucursales', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'sucursales.html'));
 });
 app.get('/clientes', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'clientes.html'));
@@ -45,7 +62,11 @@ app.get('/proveedores', (req, res) => {
 app.get('/ventas', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'ventas.html'));
 });
+
+app.use((_, res) => {
+  return res.status(404).send({ message: 'Pagina no encontrada' });
+});
 // Inicia el servidor
-app.listen(3000, () => {
-  console.log(`Servidor escuchando en http://localhost:3000`);
+app.listen(port, () => {
+  console.log(`Servidor escuchando en http://localhost:${port}`);
 });
