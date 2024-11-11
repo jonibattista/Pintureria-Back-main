@@ -1,21 +1,21 @@
-import { Level } from "./userLevel.class.js";
+import { Sale } from "./Ventas.class.js";
+
 
 export const getAll = async (req, res) => {
-    await Level.sync({ alter: true })
+    Sale.sync()
     try {
-        const result = await Level.findAll();
+        const result = await Sale.findAll();
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);
     }
 };
 
-export const getByID = async (req, res) => {
-    await Level.sync({ alter: true })
-
+export const getOne = async (req, res) => {
+    Sale.sync()
     const id = req.params.id;
     try {
-        const result = await Level.findAll({ where: { id: id } });
+        const result = await Sale.findOne({ where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
         res.status(500);
@@ -23,11 +23,10 @@ export const getByID = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-    await Level.sync({ alter: true })
-
-    const { description } = req.body;
+    Sale.sync()
+    const { idClient, idEmp, idBranch, total } = req.body;
     try {
-        const result = await Level.create({ description: description });
+        const result = await Sale.create({ idClient: idClient, idEmp: idEmp, idBranch: idBranch, total: total });
         res.status(201).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -35,12 +34,11 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-    await Level.sync({ alter: true })
-
+    Sale.sync()
     const { id } = req.params;
-    const { description } = req.body;
+    const { idClient, idEmp, idBranch, total } = req.body;
     try {
-        const result = await Level.update({ description: description }, { where: { id: id } });
+        const result = await Sale.update({ idClient: idClient, idEmp: idEmp, idBranch: idBranch, total: total }, { where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -48,14 +46,13 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-    await Level.sync({ alter: true })
-
+    Sale.sync()
     const { id } = req.params;
     try {
-        const result = await Level.destroy({ where: { id: id } });
+        const result = await Sale.destroy({ where: { id: id } });
         res
             .status(200)
-            .send({ message: `Nivel id: ${id} eliminado con exito`, result });
+            .send({ message: `empleado número ${id} eliminada con exito`, result });
     } catch (error) {
         res.status(500);
     }

@@ -1,7 +1,7 @@
 import { Client } from './Cliente.class.js';
 
 export const getAll = async (req, res) => {
-  await Client.sync({ alter: true })
+  await Client.sync()
   try {
     const result = await Client.findAll();
     res.status(200).json(result);
@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
 };
 
 export const getByDNI = async (req, res) => {
-  await Client.sync({ alter: true })
+  await Client.sync()
 
   const dni = req.params.dni;
   try {
@@ -23,7 +23,7 @@ export const getByDNI = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-  await Client.sync({ alter: true })
+  await Client.sync()
   const { dni, name, address, phone } = req.body;
   try {
     const result = await Client.create({ dni: dni, name: name, address: address, phone: phone });
@@ -34,7 +34,7 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  await Client.sync({ alter: true })
+  await Client.sync()
 
   const { id } = req.params;
   let datos = {}
@@ -50,7 +50,7 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-  await Client.sync({ alter: true })
+  await Client.sync()
 
   const { id } = req.params;
   try {

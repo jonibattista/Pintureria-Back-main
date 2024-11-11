@@ -1,10 +1,10 @@
-import { Product } from "./Productos.class.js";
+import { Employee } from "./Empleados.class.js";
 
 
 export const getAll = async (req, res) => {
-    Product.sync()
+    Employee.sync()
     try {
-        const result = await Product.findAll();
+        const result = await Employee.findAll();
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -12,10 +12,10 @@ export const getAll = async (req, res) => {
 };
 
 export const getOne = async (req, res) => {
-    Product.sync()
+    Employee.sync()
     const id = req.params.id;
     try {
-        const result = await Product.findOne({ where: { id: id } });
+        const result = await Employee.findOne({ where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
         res.status(500);
@@ -23,10 +23,10 @@ export const getOne = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-    Product.sync()
-    const { description, price, stock, idProv } = req.body;
+    Employee.sync()
+    const { name, phone, dni, salary } = req.body;
     try {
-        const result = await Product.create({ description: description, price: price, stock: stock, idProv: idProv });
+        const result = await Employee.create({ name: name, phone: phone, dni: dni, salary: salary });
         res.status(201).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -34,11 +34,11 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-    Product.sync()
+    Employee.sync()
     const { id } = req.params;
-    const { description, price, stock, idProv } = req.body;
+    const { name, phone, dni, salary } = req.body;
     try {
-        const result = await Product.update({ description: description, price: price, stock: stock, idProv: idProv }, { where: { id: id } });
+        const result = await Employee.update({ name: name, phone: phone, dni: dni, salary: salary }, { where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -46,13 +46,13 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-    Product.sync()
+    Employee.sync()
     const { id } = req.params;
     try {
-        const result = await Product.destroy({ where: { id: id } });
+        const result = await Employee.destroy({ where: { id: id } });
         res
             .status(200)
-            .send({ message: `Sucursal número ${id} eliminada con exito`, result });
+            .send({ message: `empleado número ${id} eliminada con exito`, result });
     } catch (error) {
         res.status(500);
     }

@@ -1,5 +1,6 @@
 
 import { User } from './Usuario.class.js';
+import { Client } from '../Clientes/Cliente.class.js';
 import bcrypt from 'bcrypt';
 
 
@@ -37,6 +38,17 @@ export const getByUserName = async (req, res) => {
   }
 };
 
+export const getByUserEmail = async (req, res) => {
+  await User.sync()
+  const { email } = req.params;
+  try {
+    const result = await User.findOne({ where: { email: email } });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500);
+  }
+};
+
 export const login = async (req, res) => {
   await User.sync()
 
@@ -44,22 +56,16 @@ export const login = async (req, res) => {
 
   try {
     const user = await User.findOne({ where: { userName: userName } });
-    console.log("-----------1-----------")
     console.log(user)
 
     if (!user) {
 
-      return res.status(400).json({ mensaje: 'Usuario no encontrado' });
+      return res.status(400).json(user);
     }
-    console.log("----------2------------")
-
     const esCorrecta = await bcrypt.compare(pswHash, user.pswHash);
-    console.log("-----------3-----------")
-
     if (!esCorrecta) {
-      return res.status(401).json({ mensaje: 'Contraseña incorrecta' });
+      return res.status(401).json(undefined);
     }
-
     return res.status(200).json(user);
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);

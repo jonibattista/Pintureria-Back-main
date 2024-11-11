@@ -2,36 +2,35 @@ import { DataTypes, Model } from "sequelize"
 import { sequelize } from "../BD.js"
 
 
-export class Product extends Model { }
+export class Employee extends Model { }
 
-Product.init(
+Employee.init(
     {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        description: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        stock: {
-            type: DataTypes.INTEGER,
+        phone: {
+            type: DataTypes.BIGINT,
             allowNull: true,
-            defaultValue: 0,
         },
-        idProv: {
+        dni: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        salary: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        }
     },
     {
         sequelize,
-        modelName: "product",
+        modelName: "employee",
     },
 );
 

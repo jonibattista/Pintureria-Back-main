@@ -2,36 +2,36 @@ import { DataTypes, Model } from "sequelize"
 import { sequelize } from "../BD.js"
 
 
-export class Product extends Model { }
+export class Sale extends Model { }
 
-Product.init(
+Sale.init(
     {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        description: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        price: {
+        idClient: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        stock: {
+        idEmp: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        idBranch: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        total: {
             type: DataTypes.INTEGER,
             allowNull: true,
-            defaultValue: 0,
-        },
-        idProv: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+            defaultValue: 0
+        }
     },
     {
         sequelize,
-        modelName: "product",
+        modelName: "sale",
     },
 );
 
