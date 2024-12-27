@@ -23,7 +23,6 @@ app.use(cookieParser())
 
 app.use(cors());
 
-
 app.use('/Branches', routerSuc);
 app.use('/Clients', routerCli);
 app.use('/Products', routerProd);
@@ -32,6 +31,7 @@ app.use('/Suppliers', routerSupplier);
 app.use('/Employees', routerEmp);
 app.use('/Sales', routerVenta);
 app.use('/Rows', routerRenglon);
+
 
 app.use((_, res) => {
   return res.status(404).send({ message: 'Pagina no encontrada' });
