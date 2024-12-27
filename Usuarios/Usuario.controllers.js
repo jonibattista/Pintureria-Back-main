@@ -1,7 +1,7 @@
-
 import { User } from './Usuario.class.js';
-import { Client } from '../Clientes/Cliente.class.js';
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken"
+import { SECRET_JWT } from '../config.js';
 
 
 export const getAll = async (req, res) => {
@@ -53,10 +53,9 @@ export const login = async (req, res) => {
   await User.sync()
 
   const { userName, pswHash } = req.body;
-
   try {
     const user = await User.findOne({ where: { userName: userName } });
-    console.log(user)
+    const token = jwt.sign({ id: user.id, username: user.userName, role: user.level }, SECRET_JWT, { expiresIn: "1h" })
 
     if (!user) {
 
@@ -64,9 +63,12 @@ export const login = async (req, res) => {
     }
     const esCorrecta = await bcrypt.compare(pswHash, user.pswHash);
     if (!esCorrecta) {
-      return res.status(401).json(undefined);
+      return res.status(401).send(undefined);
     }
-    return res.status(200).json(user);
+    return res.status(200).cookie("access_token", token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60
+    });
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);
     res.status(500);
