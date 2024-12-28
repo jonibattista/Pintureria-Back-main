@@ -51,7 +51,6 @@ export const getByUserEmail = async (req, res) => {
 
 export const login = async (req, res) => {
 
-
   const { userName, pswHash } = req.body;
   try {
     const user = await User.findOne({ where: { userName: userName } });

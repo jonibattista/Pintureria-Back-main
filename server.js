@@ -26,7 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-
 app.use('/Branches', routerSuc);
 app.use('/Clients', routerCli);
 app.use('/Products', routerProd);
