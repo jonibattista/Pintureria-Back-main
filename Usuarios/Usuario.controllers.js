@@ -15,7 +15,7 @@ export const getAll = async (req, res) => {
 };
 
 export const getByLevel = async (req, res) => {
-  await User.sync()
+
 
   const level = req.params.level;
   try {
@@ -27,7 +27,7 @@ export const getByLevel = async (req, res) => {
 };
 
 export const getByUserName = async (req, res) => {
-  await User.sync()
+
   const { userName } = req.params;
   console.log(userName)
   try {
@@ -39,7 +39,7 @@ export const getByUserName = async (req, res) => {
 };
 
 export const getByUserEmail = async (req, res) => {
-  await User.sync()
+
   const { email } = req.params;
   try {
     const result = await User.findOne({ where: { email: email } });
@@ -50,7 +50,7 @@ export const getByUserEmail = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  await User.sync()
+
 
   const { userName, pswHash } = req.body;
   try {
@@ -65,10 +65,14 @@ export const login = async (req, res) => {
     if (!esCorrecta) {
       return res.status(401).send(undefined);
     }
-    return res.status(200).cookie("access_token", token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60
-    });
+    return res.status(200)
+       .cookie("access_token", token, {
+         httpOnly: true,
+         maxAge: 1000 * 60 * 60,
+         secure: false, 
+         sameSite: 'lax', 
+       })
+       .send({user, token});
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);
     res.status(500);
@@ -76,7 +80,6 @@ export const login = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-  await User.sync()
 
   const { userName, email, pswHash, level } = req.body;
   const hash = await bcrypt.hash(pswHash, 10);
@@ -89,7 +92,6 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  await User.sync()
 
   const { id } = req.params;
   const { userName, pswHash, level } = req.body;
@@ -102,7 +104,6 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-  await User.sync()
 
   const { id } = req.params;
   try {

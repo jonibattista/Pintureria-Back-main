@@ -16,12 +16,16 @@ const port = PORT;
 //Abre servidor con Express
 export const app = express();
 
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  credentials: true, 
+}));
+
 //middleware para obtener el cuerpo de los formulario
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.use(cors());
 
 app.use('/Branches', routerSuc);
 app.use('/Clients', routerCli);
@@ -31,6 +35,18 @@ app.use('/Suppliers', routerSupplier);
 app.use('/Employees', routerEmp);
 app.use('/Sales', routerVenta);
 app.use('/Rows', routerRenglon);
+
+
+//prueba de persistencia de cookie
+app.get('/protected', (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (token) {
+    res.status(200).json({ message: 'Acceso permitido', token });
+  } else {
+    res.status(401).json({ message: 'No autorizado' });
+  }
+});
 
 
 app.use((_, res) => {
