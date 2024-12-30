@@ -7,9 +7,10 @@ import { routerSupplier } from './Proveedores/Proveedores.routes.js';
 import { routerEmp } from './Empleado/Empleados.routes.js';
 import { routerVenta } from './Ventas/Ventas.routes.js';
 import { routerRenglon } from './Ventas/Renglon/Renglon.routes.js';
-import { PORT } from './config.js';
+import { PORT, SECRET_JWT } from './config.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import jwt from "jsonwebtoken"
 
 const port = PORT;
 
@@ -35,16 +36,23 @@ app.use('/Employees', routerEmp);
 app.use('/Sales', routerVenta);
 app.use('/Rows', routerRenglon);
 
-
-//prueba de persistencia de cookie
-app.get('/protected', (req, res) => {
+// middleware de autenticacion de sesion de usuario
+const authenticate =  (req, res, next) => {
   const token = req.cookies.access_token;
-
-  if (token) {
-    res.status(200).json({ message: 'Acceso permitido', token });
-  } else {
-    res.status(401).json({ message: 'No autorizado' });
+  if (!token) {
+    return res.status(401).json({ message: "No autorizado" });
   }
+
+  try {
+    req.user = jwt.verify(token, SECRET_JWT);
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: "Token inválido" });
+  }
+};
+
+app.get('/authorized', authenticate, (req, res) => {
+  res.status(200).json({ message: "Acceso permitido", user: req.user });
 });
 
 

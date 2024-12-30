@@ -54,7 +54,7 @@ export const login = async (req, res) => {
   const { userName, pswHash } = req.body;
   try {
     const user = await User.findOne({ where: { userName: userName } });
-    const token = jwt.sign({ id: user.id, username: user.userName, role: user.level }, SECRET_JWT, { expiresIn: "1h" })
+    const token = jwt.sign({ id: user.id, username: user.userName, level: user.level }, SECRET_JWT, { expiresIn: "1h" })
 
     if (!user) {
 
@@ -71,12 +71,17 @@ export const login = async (req, res) => {
          secure: false, 
          sameSite: 'lax', 
        })
-       .send({user, token});
+       .send({token:token});
   } catch (error) {
     console.error('Error en el inicio de sesión:', error);
     res.status(500);
   }
 };
+
+export const logout =  (req, res) => {
+  res.clearCookie("access_token")
+};
+
 
 export const add = async (req, res) => {
 
