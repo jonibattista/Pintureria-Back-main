@@ -79,7 +79,13 @@ export const login = async (req, res) => {
 };
 
 export const logout =  (req, res) => {
-  res.clearCookie("access_token")
+  try {
+    res.clearCookie('access_token');
+    res.status(200).json({ message: 'Logout exitoso' });    
+  } catch (error) {
+    res.status(500).json({message: "Error al cerrar sesion"})
+  }
+  
 };
 
 
