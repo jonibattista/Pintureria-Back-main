@@ -55,9 +55,8 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { userName: userName } });
     const token = jwt.sign({ id: user.id, username: user.userName, level: user.level }, SECRET_JWT, { expiresIn: "1h" })
-
+    
     if (!user) {
-
       return res.status(400).json(user);
     }
     const esCorrecta = await bcrypt.compare(pswHash, user.pswHash);
@@ -73,8 +72,7 @@ export const login = async (req, res) => {
        })
        .send({token:token});
   } catch (error) {
-    console.error('Error en el inicio de sesión:', error);
-    res.status(500);
+    res.status(401).json({message: 'Error en el inicio de sesión'});
   }
 };
 

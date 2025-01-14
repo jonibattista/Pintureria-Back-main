@@ -42,7 +42,6 @@ const authenticate =  (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "No autorizado" });
   }
-
   try {
     req.user = jwt.verify(token, SECRET_JWT);
     next();
@@ -52,7 +51,7 @@ const authenticate =  (req, res, next) => {
 };
 
 app.get('/authorized', authenticate, (req, res) => {
-  res.status(200).json({ message: "Acceso permitido", user: req.user });
+  res.status(200).json(req.user);
 });
 
 
