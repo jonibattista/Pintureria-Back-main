@@ -69,8 +69,8 @@ export const login = async (req, res) => {
          maxAge: 1000 * 60 * 60,
          secure: false, 
          sameSite: 'lax', 
-       })
-       .send({token:token});
+       }).json(user.level)
+      //  .send({token:token});
   } catch (error) {
     res.status(401).json({message: 'Error en el inicio de sesión'});
   }
