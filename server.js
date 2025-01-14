@@ -11,6 +11,7 @@ import { PORT, SECRET_JWT } from './config.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import jwt from "jsonwebtoken"
+import { routerCat } from './Productos/Categorias/categorias.routes.js';
 
 const port = PORT;
 
@@ -35,6 +36,7 @@ app.use('/Suppliers', routerSupplier);
 app.use('/Employees', routerEmp);
 app.use('/Sales', routerVenta);
 app.use('/Rows', routerRenglon);
+app.use('/Category', routerCat);
 
 // middleware de autenticacion de sesion de usuario
 const authenticate =  (req, res, next) => {
