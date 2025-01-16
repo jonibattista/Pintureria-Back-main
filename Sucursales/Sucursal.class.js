@@ -1,8 +1,7 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../BD.js"
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../BD.js";
 
-
-export class Branch extends Model { }
+export class Branch extends Model {}
 
 Branch.init(
   {
@@ -11,10 +10,10 @@ Branch.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    addres: {
+    address: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
+      unique: true,
     },
     phone: {
       type: DataTypes.BIGINT,
@@ -24,7 +23,7 @@ Branch.init(
   {
     sequelize,
     modelName: "branch",
-  },
+  }
 );
 
 // import { database } from '../BD.js';

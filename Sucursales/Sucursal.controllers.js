@@ -1,7 +1,7 @@
-import { Branch } from './Sucursal.class.js';
+import { Branch } from "./Sucursal.class.js";
 
 export const getAll = async (req, res) => {
-  await Branch.sync()
+  await Branch.sync();
   try {
     const result = await Branch.findAll();
     res.status(200).json(result);
@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
 };
 
 export const getOne = async (req, res) => {
-  await Branch.sync()
+  await Branch.sync();
   const id = req.params.id;
   try {
     const result = await Branch.findOne({ where: { id: id } });
@@ -22,10 +22,10 @@ export const getOne = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-  await Branch.sync({ alter: true })
-  const { addres, phone } = req.body;
+  await Branch.sync();
+  const { address, phone } = req.body;
   try {
-    const result = await Branch.create({ addres: addres, phone: phone });
+    const result = await Branch.create({ address: address, phone: phone });
     res.status(201).json(result);
   } catch (error) {
     res.status(500).send(error);
@@ -33,11 +33,14 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  await Branch.sync()
+  await Branch.sync();
   const { id } = req.params;
-  const { addres, phone } = req.body;
+  const { address, phone } = req.body;
   try {
-    const result = await Branch.update({ addres: addres, phone: phone }, { where: { id: id } });
+    const result = await Branch.update(
+      { address: address, phone: phone },
+      { where: { id: id } }
+    );
     res.status(200).json(result);
   } catch (error) {
     res.status(500).send(error);
@@ -45,7 +48,7 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-  await Branch.sync()
+  await Branch.sync();
   const { id } = req.params;
   try {
     const result = await Branch.destroy({ where: { id: id } });
