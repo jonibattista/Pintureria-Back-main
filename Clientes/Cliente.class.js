@@ -1,8 +1,7 @@
-import { DataTypes, Model } from "sequelize"
-import { sequelize } from "../BD.js"
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../BD.js";
 
-
-export class Client extends Model { }
+export class Client extends Model {}
 
 Client.init(
   {
@@ -17,11 +16,11 @@ Client.init(
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: false,
     },
     address: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(50),
       allowNull: true,
       defaultValue: null,
     },
@@ -34,9 +33,8 @@ Client.init(
   {
     sequelize,
     modelName: "client",
-  },
+  }
 );
-
 
 // import { database } from '../BD.js';
 

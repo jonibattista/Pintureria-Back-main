@@ -1,7 +1,7 @@
-import { Client } from './Cliente.class.js';
+import { Client } from "./Cliente.class.js";
 
 export const getAll = async (req, res) => {
-  await Client.sync()
+  await Client.sync();
   try {
     const result = await Client.findAll();
     res.status(200).json(result);
@@ -11,7 +11,7 @@ export const getAll = async (req, res) => {
 };
 
 export const getByDNI = async (req, res) => {
-  await Client.sync()
+  await Client.sync();
 
   const dni = req.params.dni;
   try {
@@ -23,10 +23,21 @@ export const getByDNI = async (req, res) => {
 };
 
 export const add = async (req, res) => {
-  await Client.sync()
+  await Client.sync();
   const { dni, name, address, phone } = req.body;
+  if (dni) {
+    const existingClient = await Client.findOne({ where: { dni: dni } });
+    if (existingClient) {
+      return res.status(400).json({ message: "El DNI ya existe." });
+    }
+  }
   try {
-    const result = await Client.create({ dni: dni, name: name, address: address, phone: phone });
+    const result = await Client.create({
+      dni: dni,
+      name: name,
+      address: address,
+      phone: phone,
+    });
     res.status(201).json(result);
   } catch (error) {
     res.status(500).send(error);
@@ -34,15 +45,21 @@ export const add = async (req, res) => {
 };
 
 export const update = async (req, res) => {
-  await Client.sync()
+  await Client.sync();
 
   const { id } = req.params;
-  let datos = {}
-  if (req.body.name) datos.name = req.body.name
-  if (req.body.address) datos.address = req.body.address
-  if (req.body.phone) datos.phone = req.body.phone
+  const { dni, name, address, phone } = req.body;
+  if (dni) {
+    const existingClient = await Branch.findOne({ where: { dni: dni } });
+    if (existingClient && existingClient.id !== id) {
+      return res.status(400).json({ message: "El DNI ya existe." });
+    }
+  }
   try {
-    const result = await Client.update(datos, { where: { id: id } });
+    const result = await Client.update(
+      { address: address, phone: phone, name: name, dni: dni },
+      { where: { id: id } }
+    );
     res.status(200).json(result);
   } catch (error) {
     res.status(500).send(error);
@@ -50,7 +67,7 @@ export const update = async (req, res) => {
 };
 
 export const remove = async (req, res) => {
-  await Client.sync()
+  await Client.sync();
 
   const { id } = req.params;
   try {
