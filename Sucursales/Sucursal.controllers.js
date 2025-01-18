@@ -24,6 +24,12 @@ export const getOne = async (req, res) => {
 export const add = async (req, res) => {
   await Branch.sync();
   const { address, phone } = req.body;
+  if (address) {
+    const existingBrach = await Branch.findOne({ where: { address: address } });
+    if (existingBrach) {
+      return res.status(400).json({ message: "Direccion ya existe." });
+    }
+  }
   try {
     const result = await Branch.create({ address: address, phone: phone });
     res.status(201).json(result);
@@ -36,6 +42,12 @@ export const update = async (req, res) => {
   await Branch.sync();
   const { id } = req.params;
   const { address, phone } = req.body;
+  if (address) {
+    const existingBrach = await Branch.findOne({ where: { address: address } });
+    if (existingBrach && existingBrach.id !== id) {
+      return res.status(400).json({ message: "Direccion ya existe." });
+    }
+  }
   try {
     const result = await Branch.update(
       { address: address, phone: phone },
