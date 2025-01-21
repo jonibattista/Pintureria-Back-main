@@ -6,7 +6,7 @@ export const getAll = async (req, res) => {
     const result = await Client.findAll();
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({message: "Error al obtener los clientes."});
+    res.status(500).json({ message: "Error al obtener los clientes." });
   }
 };
 
@@ -18,7 +18,7 @@ export const getByDNI = async (req, res) => {
     const result = await Client.findAll({ where: { dni: dni } });
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({message: "Error al obtener el cliente."});
+    res.status(500).json({ message: "Error al obtener el cliente." });
   }
 };
 
@@ -40,7 +40,7 @@ export const add = async (req, res) => {
     });
     res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({message: "Error al agregar cliente."});
+    res.status(500).json({ message: "Error al agregar cliente." });
   }
 };
 
@@ -50,7 +50,7 @@ export const update = async (req, res) => {
   const { id } = req.params;
   const { dni, name, address, phone } = req.body;
   if (dni) {
-    const existingClient = await Branch.findOne({ where: { dni: dni } });
+    const existingClient = await Client.findOne({ where: { dni: dni } });
     if (existingClient && existingClient.id !== id) {
       return res.status(400).json({ message: "El DNI ya existe." });
     }
@@ -62,7 +62,7 @@ export const update = async (req, res) => {
     );
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({message: "Error al actualizar cliente."});
+    res.status(500).json({ message: "Error al actualizar cliente." });
   }
 };
 
@@ -76,6 +76,6 @@ export const remove = async (req, res) => {
       .status(200)
       .send({ message: `Cliente id: ${id} eliminado con exito`, result });
   } catch (error) {
-    res.status(500).json({message: "Error al eliminar cliente."});
+    res.status(500).json({ message: "Error al eliminar cliente." });
   }
 };
