@@ -98,13 +98,13 @@ DELETE http://localhost:8080/allUsers/1 HTTP/1.1
 
 
 ###  ---------------- Clientes -----------------------
-GET http://localhost:8080/allClients HTTP/1.1
+GET http://localhost:8080/Clients HTTP/1.1
 
 ###
 GET http://localhost:8080/allClients/2 HTTP/1.1
 
 ###
-POST http://localhost:8080/allClients HTTP/1.1
+POST http://localhost:8080/Clients HTTP/1.1
 Content-Type: application/json
 
 {
