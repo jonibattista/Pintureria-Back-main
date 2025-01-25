@@ -52,12 +52,12 @@ app.use(cookieParser());
 };
 
 
-app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
-app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
-app.use("/Products", authenticate, authorizedRole([1, 2]),routerProd);
+app.use("/Branches", /*authenticate, authorizedRole([1]),*/ routerSuc);
+app.use("/Clients", /*authenticate, authorizedRole([1, 2]),*/ routerCli);
+app.use("/Products", /*authenticate, authorizedRole([1, 2]),*/routerProd);
+app.use("/Employees",/* authenticate, authorizedRole([1]),*/ routerEmp);
 app.use("/Users", authenticate, authorizedRole([1]),routerUsu);
 app.use("/Suppliers", authenticate, authorizedRole([1, 2]), routerSupplier);
-app.use("/Employees", authenticate, authorizedRole([1]), routerEmp);
 
 app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
 app.use("/Rows", authenticate, authorizedRole([1, 2]), routerRenglon);
