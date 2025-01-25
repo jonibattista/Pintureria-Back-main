@@ -27,7 +27,7 @@ export const add = async (req, res) => {
     const { idClient, idEmp, idBranch, total } = req.body;
     try {
         const result = await Sale.create({ idClient: idClient, idEmp: idEmp, idBranch: idBranch, total: total });
-        res.status(201).json(result);
+        res.status(201).json(result.id);
     } catch (error) {
         res.status(500).json({ message: "Error al agregar venta." });
     }
