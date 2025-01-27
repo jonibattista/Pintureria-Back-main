@@ -23,16 +23,16 @@ export const getAll = async (req, res) => {
 //     }
 // };
 
-// export const add = async (req, res) => {
-//     Product.sync()
-//     const { description, price, stock, idProv } = req.body;
-//     try {
-//         const result = await Product.create({ description: description, price: price, stock: stock, idProv: idProv });
-//         res.status(201).json(result);
-//     } catch (error) {
-//         res.status(500).send(error);
-//     }
-// };
+export const add = async (req, res) => {
+    Category.sync()
+    const category = req.body;
+    try {
+        const result = await Category.bulkCreate(category);
+        res.status(201).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error al agregar categorias." });
+    }
+};
 
 // export const update = async (req, res) => {
 //     Product.sync()

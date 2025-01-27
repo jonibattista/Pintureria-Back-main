@@ -14,14 +14,26 @@ Sale.init(
         idClient: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'Clients', 
+                key: 'id',
+            },
         },
         idEmp: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'Employees', 
+                key: 'id', 
+            },
         },
         idBranch: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: 'Branches',
+                key: 'id',
+            },
         },
         total: {
             type: DataTypes.INTEGER,

@@ -1,0 +1,115 @@
+-- CREATE TABLE Branches (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     phone BIGINT,
+--     address VARCHAR(255) UNIQUE NOT NULL
+-- );
+
+-- CREATE TABLE Clients (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     name VARCHAR(255) NOT NULL,
+--     dni INT UNIQUE NOT NULL,
+--     address VARCHAR(255),
+--     phone BIGINT 
+-- );
+
+-- CREATE TABLE Products (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     description VARCHAR(255) NOT NULL,
+--     price DECIMAL(10, 2) NOT NULL,
+--     stock INT NOT NULL,
+--     FOREIGN KEY (idProv) REFERENCES Suppliers(id),
+--     FOREIGN KEY (idCat) REFERENCES Category(id)
+-- );
+
+-- CREATE TABLE Employees (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     name VARCHAR(255) NOT NULL,
+--     phone BIGINT,
+--     dni INT UNIQUE NOT NULL,
+--     salary DECIMAL(10, 2) NOT NULL
+-- );
+
+-- CREATE TABLE Users (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     username VARCHAR(255) NOT NULL,
+--     password VARCHAR(255) NOT NULL,
+--     email VARCHAR(255) UNIQUE NOT NULL ,
+--     role INT DEFAULT 3
+-- );
+
+-- CREATE TABLE Suppliers (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     cuit BIGINT NOT NULL UNIQUE,
+--     name VARCHAR(255) NOT NULL,
+--     contact VARCHAR(255) NOT NULL
+-- );
+
+-- CREATE TABLE Sales (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     client_id INT,
+--     employee_id INT,
+--     date DATE NOT NULL,
+--     total DECIMAL(10, 2) NOT NULL,
+--     FOREIGN KEY (client_id) REFERENCES Clients(id),
+--     FOREIGN KEY (employee_id) REFERENCES Employees(id)
+-- );
+
+-- CREATE TABLE Rows (
+--     id INT PRIMARY KEY AUTO_INCREMENT,
+--     sale_id INT,
+--     product_id INT,
+--     quantity INT NOT NULL,
+--     price DECIMAL(10, 2) NOT NULL,
+--     FOREIGN KEY (sale_id) REFERENCES Sales(id),
+--     FOREIGN KEY (product_id) REFERENCES Products(id)
+-- );
+
+-- CREATE TABLE Category (
+--     id INT PRIMARY KEY AUTO_IN8CREMENT,
+--     name VARCHAR(255) NOT NULL
+-- );
+
+-- INSERT INTO Branches (phone, address, createdAt, updatedAt) VALUES
+-- (3412742584, 'Address 1',NOW(),NOW()), 
+-- (1111111111, 'Address 2',NOW(),NOW()), 
+-- (2222222222, 'Address 3',NOW(),NOW()); 
+
+-- INSERT INTO Clients ( name,dni, address, phone,createdAt, updatedAt) VALUES 
+-- ('Client 1',11111111, 'address 1', 1111111111,NOW(),NOW()), 
+-- ('Client 2',22222222, 'address 2', 2222222222,NOW(),NOW()), 
+-- ('Client 3',33333333, 'address 3', 3333333333,NOW(),NOW());
+
+INSERT INTO Products (description, price, stock, idProv, idCat ,createdAt, updatedAt) VALUES 
+('Product 1', 10.00, 100, 1 , 1,NOW(),NOW()),
+('Product 2', 20.00, 200, 2 , 2,NOW(),NOW()),
+('Product 3', 30.00, 300, 3 , 3,NOW(),NOW());
+
+-- INSERT INTO Employees (name, phone, salary,dni,createdAt, updatedAt) VALUES 
+-- ('Employee 1', 11111111, 3000.00, 99999999,NOW(),NOW()), 
+-- ('Employee 2', 22222222, 2000.00, 88888888,NOW(),NOW()),
+-- ('Employee 3', 33333333, 10000.00, 77777777,NOW(),NOW());
+
+-- INSERT INTO Users (username, password, role) VALUES 
+-- ('user1', 'password1', 1), 
+-- ('user2', 'password2', 2),
+-- ('user2', 'password2', 2);
+
+-- INSERT INTO Suppliers (name, cuit, address, phone,createdAt, updatedAt) VALUES 
+-- ('Supplier 1', 1111111111,"address 1", 111111111,NOW(),NOW()), 
+-- ('Supplier 2', 2222222222,"address 2", 222222222,NOW(),NOW()), 
+-- ('Supplier 3', 3333333333,"address 3", 333333333,NOW(),NOW()); 
+
+-- INSERT INTO Sales (idClient, idEmp,idBranch, total,createdAt, updatedAt) VALUES 
+-- (1, 1, 1, 100.00,NOW(),NOW()), 
+-- (2, 2, 2, 200.00,NOW(),NOW()),
+-- (3, 3, 3, 300.00,NOW(),NOW());
+
+INSERT INTO Rows (idSale, idProduct, description,price, amount, total,createdAt, updatedAt) VALUES
+(1, 1,"Product 1", 10.00, 1, 10.00,NOW(),NOW()),
+(2, 2,"Product 2", 20.00, 2, 40.00,NOW(),NOW()),
+(3, 3,"Product 3", 30.00, 3, 90.00,NOW(),NOW()),
+
+-- INSERT INTO Categories (name,createdAt, updatedAt) VALUES 
+-- ('Category 1',NOW(),NOW()), 
+-- ('Category 2',NOW(),NOW()),
+-- ('Category 3',NOW(),NOW());

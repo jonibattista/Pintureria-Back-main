@@ -16,7 +16,7 @@ Product.init(
             allowNull: false,
         },
         price: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL,
             allowNull: false,
         },
         stock: {
@@ -26,11 +26,17 @@ Product.init(
         },
         idProv: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            references:{
+                model:"Suppliers",
+                key: "id"
+            },
         },
         idCat: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            references:{
+                model:"Categories",
+                key: "id"
+            },
         },
     },
     {

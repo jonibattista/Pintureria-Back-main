@@ -1,7 +1,154 @@
-###  ---------------- SUCURSALES -----------------------
+###  
 GET http://localhost:8080/Branches HTTP/1.1
+###
+GET http://localhost:8080/Employees HTTP/1.1
+###
+GET http://localhost:8080/Users HTTP/1.1
+###
+GET http://localhost:8080/Suppliers HTTP/1.1
+###
+GET http://localhost:8080/category HTTP/1.1
+###
+GET http://localhost:8080/Products HTTP/1.1
+###
+GET http://localhost:8080/Clients HTTP/1.1
+###
+GET http://localhost:8080/Sales HTTP/1.1
+###
+GET http://localhost:8080/Rows HTTP/1.1
 
 ###
+POST http://localhost:8080/Branches HTTP/1.1
+Content-Type: application/json
+
+[
+    {
+        "phone": 4444444444,
+        "address": "address 4"
+    },
+    {
+        "phone": 555555555,
+        "address": "address 5"
+    }
+]
+
+###
+POST http://localhost:8080/Employees HTTP/1.1
+Content-Type: application/json
+
+[{
+    "name": "Alex Birchmeyer",
+    "salary": 500000.00,
+    "phone": 3412742584,
+    "dni": 94984636
+},
+{
+    "name": "Luka Birchmeyer",
+    "salary": 500000.00,
+    "phone": 1111111,
+    "dni": 25555555
+},
+{
+    "name": "Luis Birchmeyer",
+    "salary": 500000.00,
+    "phone": 222222222,
+    "dni": 22222333333
+}]
+
+###
+POST http://localhost:8080/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "admin",
+    "pswHash": "admin",
+    "email": "admin@admin.com",
+    "role": 1
+}
+###
+POST http://localhost:8080/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "vendedor",
+    "pswHash": "vendedor",
+    "email": "vendedor@vendedor.com",
+    "role": 2
+}
+###
+POST http://localhost:8080/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "user",
+    "pswHash": "user",
+    "email": "user@user.com",
+    "role": 3
+}
+
+###
+POST http://localhost:8080/Suppliers HTTP/1.1
+Content-Type: application/json
+
+[{
+    "cuit": 23949846369,
+    "name": "Tersuave",
+    "address": "address 1",
+    "phone": 111111111
+},
+{
+    "cuit": 222222222,
+    "name": "Rex",
+    "address": "address 2",
+    "phone": 222222222
+},
+{
+    "cuit": 33333333,
+    "name": "Distincion",
+    "address": "address 3",
+    "phone": 3333333333
+}]
+
+###
+POST http://localhost:8080/category HTTP/1.1
+Content-Type: application/json
+
+[{
+    "description": "Latex"
+},
+{
+    "description": "Esmalte"
+},
+{
+    "description": "Accesorios"
+}] 
+
+
+###
+POST http://localhost:8080/category HTTP/1.1
+Content-Type: application/json
+
+[{
+    "description": "Latex"
+},
+{
+    "description": "Esmalte"
+},
+{
+    "description": "Accesorios"
+}] 
+
+###
+POST http://localhost:8080/Clients HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Alex Birchmeyer",
+    "dni": 1111111111,
+    "address": "address 1",
+    "phone": 3412742584
+}
+###---------------- SUCURSALES -----------------------
 GET http://localhost:3000/allBranches/1 HTTP/1.1
 
 ###
@@ -22,13 +169,15 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/allBranches/4 HTTP/1.1
+DELETE http://localhost:8080/Branches/1 HTTP/1.1
 
 
 
 ###  ---------------- PRODUCTOS -----------------------
-GET http://localhost:3000/allProducto HTTP/1.1
+GET http://localhost:8080/Products HTTP/1.1
 
+###
+GET http://localhost:8080/category HTTP/1.1
 ###
 GET http://localhost:3000/allProducto/2 HTTP/1.1
 
@@ -151,7 +300,7 @@ DELETE http://localhost:3000/allUsuario/3 HTTP/1.1
 
 
 ###  ---------------- Productos -----------------------
-GET http://localhost:8080/allSuppliers HTTP/1.1
+GET http://localhost:8080/Suppliers HTTP/1.1
 
 ###
 GET http://localhost:8080/allProducts/2 HTTP/1.1

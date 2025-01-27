@@ -19,11 +19,12 @@ Employee.init(
       allowNull: true,
     },
     dni: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
+      unique:true,
       allowNull: false,
     },
     salary: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
   },

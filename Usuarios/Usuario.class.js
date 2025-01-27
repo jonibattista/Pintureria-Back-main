@@ -25,7 +25,7 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    level: {
+    role: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 3,

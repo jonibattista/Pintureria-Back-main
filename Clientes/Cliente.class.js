@@ -16,11 +16,11 @@ Client.init(
       allowNull: false,
     },
     name: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     address: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
     },

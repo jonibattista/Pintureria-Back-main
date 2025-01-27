@@ -5,14 +5,27 @@ import { sequelize } from "../../BD.js"
 export class Row extends Model { }
 
 Row.init(
-    {
+    {     
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey:true
+        },
         idSale: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            references:{
+                model: "Sales",
+                key: "id"
+            },
         },
         idProduct: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            references:{
+                model: "Products",
+                key: "id"
+            },
         },
         description: {
             type: DataTypes.STRING,

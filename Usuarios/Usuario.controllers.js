@@ -89,6 +89,7 @@ export const logout =  (req, res) => {
 export const register = async (req, res) => {
 
   const { userName, email, pswHash, level } = req.body;
+  console.log(pswHash)
   const userExist = await User.findOne({ where: { userName: userName } });
   if (userExist) return res.status(400).json({message: 'Nombre de usuario existente'});
   const emialExist = await User.findOne({ where: { email: email } });
