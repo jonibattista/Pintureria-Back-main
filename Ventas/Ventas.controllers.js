@@ -1,4 +1,7 @@
+import { Row } from "./Renglon/Renglon.class.js";
 import { Sale } from "./Ventas.class.js";
+import { sequelize } from "../BD.js";
+import { Product } from "../Productos/Productos.class.js";
 
 
 export const getAll = async (req, res) => {
@@ -24,12 +27,30 @@ export const getOne = async (req, res) => {
 
 export const add = async (req, res) => {
     Sale.sync()
-    const { idClient, idEmp, idBranch, total } = req.body;
+    const trans = await sequelize.transaction()
+    const { idClient, idEmp, idBranch, total, saleProds} = req.body;
     try {
-        const result = await Sale.create({ idClient: idClient, idEmp: idEmp, idBranch: idBranch, total: total });
-        res.status(201).json(result.id);
+        const sale = await Sale.create({ idClient: idClient, idEmp: idEmp, idBranch: idBranch, total: total },{ transaction: trans });
+        const completeRows = saleProds.map((prod) => {
+            prod.idSale = sale.id;
+            return prod;
+          });
+        await Row.bulkCreate(completeRows,{ transaction: trans })
+        const datos = saleProds.map((prod) => {
+            const total = prod.stock - prod.amount;
+            return { id: prod.idProduct, stock: total };
+          });
+          for (const prod of saleProds) {
+            const totalStock = prod.stock - prod.amount;
+            await Product.update(
+              { stock: totalStock },
+              { where: { id: prod.idProduct }, transaction: trans }
+            )}
+        await trans.commit()
+        res.status(201).json({ message: "Venta creada con exito" });
     } catch (error) {
-        res.status(500).json({ message: "Error al agregar venta." });
+        await trans.rollback()
+        res.status(500).json({ message: "Error al crear venta" });
     }
 };
 

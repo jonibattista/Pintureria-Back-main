@@ -8,7 +8,7 @@ export const getAll = async (req, res) => {
         const result = await Category.findAll();
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json({message:"error al obtener las categorias"});
     }
 };
 

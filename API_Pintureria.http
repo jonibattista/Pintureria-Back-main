@@ -109,20 +109,6 @@ Content-Type: application/json
     "phone": 3333333333
 }]
 
-###
-POST http://localhost:8080/category HTTP/1.1
-Content-Type: application/json
-
-[{
-    "description": "Latex"
-},
-{
-    "description": "Esmalte"
-},
-{
-    "description": "Accesorios"
-}] 
-
 
 ###
 POST http://localhost:8080/category HTTP/1.1
@@ -148,6 +134,10 @@ Content-Type: application/json
     "address": "address 1",
     "phone": 3412742584
 }
+
+###
+DELETE http://localhost:8080/Sales/2 HTTP/1.1
+
 ###---------------- SUCURSALES -----------------------
 GET http://localhost:3000/allBranches/1 HTTP/1.1
 

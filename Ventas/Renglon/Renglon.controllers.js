@@ -7,7 +7,7 @@ export const getAll = async (req, res) => {
         const result = await Row.findAll();
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).json({message:"error al obtener las filas"});
     }
 };
 
