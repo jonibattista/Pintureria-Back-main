@@ -1,7 +1,7 @@
 import { Employee } from "./Empleados.class.js";
 
 export const getAll = async (req, res) => {
-  Employee.sync({alter:true});
+  Employee.sync();
   try {
     const result = await Employee.findAll();
     res.status(200).json(result);

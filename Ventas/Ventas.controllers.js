@@ -75,12 +75,16 @@ export const update = async (req, res) => {
 export const remove = async (req, res) => {
     Sale.sync()
     const { id } = req.params;
+    const trans = await sequelize.transaction()
     try {
-        const result = await Sale.destroy({ where: { id: id } });
+        await Row.destroy({ where: { idSale: id } }, {transaction:trans});
+        await Sale.destroy({ where: { id: id } }, {transaction:trans});
         res
             .status(200)
             .send({ message: `Venta número ${id} eliminada con exito`, result });
+        await trans.commit()
     } catch (error) {
-        res.status(500).json({ message: "Error al eliminar las venta." });;
+        await trans.rollback()
+        res.status(500).json(/*{ message: "Error al eliminar las venta." }*/error);;
     }
 };

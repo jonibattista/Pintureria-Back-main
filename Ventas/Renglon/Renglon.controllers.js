@@ -57,16 +57,3 @@ export const remove = async (req, res) => {
         res.status(500);
     }
 };
-
-export const removeBySale = async (req, res) => {
-    Row.sync()
-    const { id } = req.params;
-    try {
-        const result = await Row.destroy({ where: { idSale: id } });
-        res
-            .status(200)
-            .send({ message: `renglon número ${id} eliminada con exito`, result });
-    } catch (error) {
-        res.status(500);
-    }
-};
