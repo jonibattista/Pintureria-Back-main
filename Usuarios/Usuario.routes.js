@@ -5,7 +5,7 @@ export const routerUsu = Router();
 
 routerUsu.get('/', getAll);
 routerUsu.get('/name/:userName', getByUserName);
-routerUsu.get('/level/:level',  getByLevel);
+routerUsu.get('/role/:role',  getByLevel);
 routerUsu.put('/:id', update);
 routerUsu.delete('/:id', remove);
 routerUsu.get('/email/:email', getByUserEmail);

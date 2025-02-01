@@ -46,7 +46,7 @@ app.use(cookieParser());
 
  const authorizedRole = (role) => {
   return (req, res, next) => {
-    if (!role.includes(req.user.level)) return res.status(403).json({ message: "No autorizado" });
+    if (!role.includes(req.user.role)) return res.status(403).json({ message: "No autorizado" });
     next();
   };
 };
