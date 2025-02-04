@@ -77,6 +77,15 @@ export const remove = async (req, res) => {
     const { id } = req.params;
     const trans = await sequelize.transaction()
     try {
+        const rows = await Row.findAll({where:{idSale:id}})
+        for (const row of rows) {
+            const product = await Product.findOne({ where: { id: row.idProduct } });
+            const newStock = product.stock + row.amount;
+            await Product.update(
+                { stock: newStock },
+                { where: { id: row.idProduct }, transaction: trans }
+            );
+        }
         await Row.destroy({ where: { idSale: id } }, {transaction:trans});
         await Sale.destroy({ where: { id: id } }, {transaction:trans});
         res
