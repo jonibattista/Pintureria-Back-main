@@ -25,6 +25,7 @@
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
+    "mercadopago": "1.5.16",
     "mysql2": "^3.11.3",
     "node.js": "^0.0.1-security",
     "nodemon": "^3.1.7",

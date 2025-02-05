@@ -14,6 +14,8 @@ import jwt from "jsonwebtoken";
 import { routerCat } from "./Productos/Categorias/categorias.routes.js";
 import {login,logout, register} from "./Usuarios/Usuario.controllers.js";
 import { getAll, getOne } from "./Productos/Productos.controllers.js";
+import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
+
 
 const port = PORT;
 
@@ -58,10 +60,10 @@ app.use("/Products", /*authenticate, authorizedRole([1, 2]),*/routerProd);
 app.use("/Employees",/* authenticate, authorizedRole([1]),*/ routerEmp);
 app.use("/users",/* authenticate, authorizedRole([1]),*/routerUsu);
 app.use("/Suppliers",/* authenticate, authorizedRole([1, 2]),*/ routerSupplier);
-
 app.use("/Sales",/* authenticate, authorizedRole([1, 2]),*/ routerVenta);
 app.use("/Rows",/* authenticate, authorizedRole([1, 2]),*/ routerRenglon);
 app.use("/category",/* authenticate, authorizedRole([1, 2]),*/ routerCat);
+app.use("/mp",routerMP); 
 
 app.get("/authorized", authenticate, (req, res) => {
   res.status(200).json(req.user);
