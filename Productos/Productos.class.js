@@ -11,9 +11,13 @@ Product.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        description: {
+        title: {
             type: DataTypes.STRING,
             allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         price: {
             type: DataTypes.DECIMAL,
@@ -37,6 +41,10 @@ Product.init(
                 model:"Categories",
                 key: "id"
             },
+        },
+        imgUrl: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
     },
     {

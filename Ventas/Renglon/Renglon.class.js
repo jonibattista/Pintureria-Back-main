@@ -34,7 +34,7 @@ Row.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    amount: {
+    quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

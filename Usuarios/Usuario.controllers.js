@@ -5,7 +5,7 @@ import { SECRET_JWT } from '../config.js';
 
 
 export const getAll = async (req, res) => {
-  await User.sync({alter:true});
+  await User.sync();
   try {
     const result = await User.findAll();
     res.status(200).json(result);

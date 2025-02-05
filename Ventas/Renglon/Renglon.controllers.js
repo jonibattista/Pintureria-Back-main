@@ -24,9 +24,9 @@ export const getBySale = async (req, res) => {
 
 export const add = async (req, res) => {
     Row.sync()
-    const { idSale, idProduct, price, amount, total, description } = req.body;
+    const { idSale, idProduct, price, quantity, total, description } = req.body;
     try {
-        const result = await Row.create({ idSale: idSale, description: description, idProduct: idProduct, price: price, amount: amount, total: total });
+        const result = await Row.create({ idSale: idSale, description: description, idProduct: idProduct, price: price, quantity: quantity, total: total });
         res.status(201).json(result);
     } catch (error) {
         res.status(500).send(error);
@@ -36,9 +36,9 @@ export const add = async (req, res) => {
 export const update = async (req, res) => {
     Row.sync()
     const { id } = req.params;
-    const { idSale, idProduct, price, amount, total, description } = req.body;
+    const { idSale, idProduct, price, quantity, total, description } = req.body;
     try {
-        const result = await Row.update({ idProduct: idProduct, price: price, amount: amount, total: total }, { where: { id: id } });
+        const result = await Row.update({ idProduct: idProduct, price: price, quantity: quantity, total: total }, { where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
         res.status(500).send(error);

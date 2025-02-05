@@ -5,7 +5,7 @@ import { Product } from "../Productos/Productos.class.js";
 
 
 export const getAll = async (req, res) => {
-    Sale.sync()
+    Sale.sync({alter:true})
     try {
         const result = await Sale.findAll();
         res.status(200).json(result);
@@ -43,11 +43,11 @@ export const add = async (req, res) => {
           });
         await Row.bulkCreate(completeRows,{ transaction: trans })
         const datos = saleProds.map((prod) => {
-            const total = prod.stock - prod.amount;
+            const total = prod.stock - prod.quantity;
             return { id: prod.idProduct, stock: total };
           });
           for (const prod of saleProds) {
-            const totalStock = prod.stock - prod.amount;
+            const totalStock = prod.stock - prod.quantity;
             await Product.update(
               { stock: totalStock },
               { where: { id: prod.idProduct }, transaction: trans }
@@ -80,7 +80,7 @@ export const remove = async (req, res) => {
         const rows = await Row.findAll({where:{idSale:id}})
         for (const row of rows) {
             const product = await Product.findOne({ where: { id: row.idProduct } });
-            const newStock = product.stock + row.amount;
+            const newStock = product.stock + row.quantity;
             await Product.update(
                 { stock: newStock },
                 { where: { id: row.idProduct }, transaction: trans }
