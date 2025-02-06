@@ -1,12 +1,16 @@
 import { Router } from "express";
-import { createOrder, getOrder } from "./mercadoPago.controllers.js";
+import { createOrder, failure, getOrder, pending, success, webhook } from "./mercadoPago.controllers.js";
 
 export const routerMP = Router()
 
 
 routerMP.get("/", getOrder)
+routerMP.get("/success", success)
+routerMP.get("/failure", failure)
+routerMP.get("/pending", pending)
 
 routerMP.post("/", createOrder)
+routerMP.post("/webhook", webhook)
 
 
 
