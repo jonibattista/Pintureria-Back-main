@@ -15,6 +15,7 @@ import { routerCat } from "./Productos/Categorias/categorias.routes.js";
 import {login,logout, register} from "./Usuarios/Usuario.controllers.js";
 import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
+import morgan from "morgan";
 
 
 const port = PORT;
@@ -29,7 +30,8 @@ app.use(
   })
 );
 
-//middleware para obtener el cuerpo de los formulario
+
+app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());

@@ -2,5 +2,5 @@ export const {
     PORT = 8080,
     SECRET_JWT = "secretoDeJSONwebTOKENparaLApintureria",
     URL = `http://localhost:8080`,
-    URLS = "https://8d4d-2803-9800-98cf-1389-7c2e-4aa3-cd2d-5008.ngrok-free.app"
+    HTTPS = "https://1750-2803-9800-98c5-2ad-f8ec-e25e-3b5d-eb22.ngrok-free.app"
 } = process.env
