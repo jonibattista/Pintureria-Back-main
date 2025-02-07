@@ -39,6 +39,15 @@ Sale.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             defaultValue: 0
+        },
+        idPay: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            
         }
     },
     {

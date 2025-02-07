@@ -1,8 +1,8 @@
 import mercadopago from "mercadopago";
-import {URL, HTTPS} from "../config.js"
+import {URL, HTTPS, TEST_MERCADOPAGO} from "../config.js"
 
 mercadopago.configure({
-    access_token: "TEST-5473784009343540-020513-09712b5cf60a102728d25173bddd5a6f-265309285"
+    access_token: TEST_MERCADOPAGO
 });
 
 export const createOrder = async (req, res) => {
@@ -18,22 +18,16 @@ export const createOrder = async (req, res) => {
 
     try {
       const preference = {
-        // items: [
-        //     {
-        //         title: "Latex 10lt",
-        //         unit_price: 100,
-        //         quantity: 1,
-        //     }
-        // ],
         items: items,
         notification_url: HTTPS + "/mp/webhook",
         back_urls: {
-          success: URL + "/success",
-          failure: URL + "/failure",
-          pending: URL + "/pending",
+          success: "http://localhost:3000/payment_success",
+          failure:  "http://localhost:3000/payment_failure",
+          pending:  "http://localhost:3000/payment_pending",
         },
       };
       const response = await mercadopago.preferences.create(preference);
+      console.log(response)
       res.status(200).json(response.body);
     } catch (error) {
       console.log(error)
@@ -43,21 +37,21 @@ export const createOrder = async (req, res) => {
 };
 
 export const webhook = async (req, res) => {
-    const { id, type } = req.query;
-    console.log(req.query);
-    try {
-      if (type === "payment") {
-        const data = await mercadopago.payment.findById(id);
-        // store in database
-        console.log(data);
-        res.status(200).send(type);
-      } else {
-        res.status(400).json({ message: "Invalid topic" });
+  try {
+    const payment = req.query;
+    console.log(payment);
+    if (payment.type === "payment") {
+      const data = await mercadopago.payment.findById(payment["data.id"]);
+      const body = data.body
+      if (body.status === "approved" && body.status_detail === "accredited") {
+        res.status(200);
       }
-    } catch (error) {
-      return res.status(500).json(error);
     }
-  };
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Something goes wrong" });
+  }
+};
 
 export const getOrder = async (req, res) => {
     res.json("get order")
