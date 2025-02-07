@@ -1,6 +1,5 @@
 import mercadopago from "mercadopago";
 import {URL, HTTPS} from "../config.js"
-import { NUMBER } from "sequelize";
 
 mercadopago.configure({
     access_token: "TEST-5473784009343540-020513-09712b5cf60a102728d25173bddd5a6f-265309285"
@@ -27,7 +26,7 @@ export const createOrder = async (req, res) => {
         //     }
         // ],
         items: items,
-        notification_url: HTTPS + "/webhook",
+        notification_url: HTTPS + "/mp/webhook",
         back_urls: {
           success: URL + "/success",
           failure: URL + "/failure",
@@ -44,13 +43,16 @@ export const createOrder = async (req, res) => {
 };
 
 export const webhook = async (req, res) => {
-    const payment = req.body;
+    const { id, type } = req.query;
+    console.log(req.query);
     try {
-      if (payment.type === "payment") {
-        const data = await mercadopago.payment.findById(payment["data.id"]);
+      if (type === "payment") {
+        const data = await mercadopago.payment.findById(id);
         // store in database
-        console.log(data)
-        res.status(200).json(data);
+        console.log(data);
+        res.status(200).send(type);
+      } else {
+        res.status(400).json({ message: "Invalid topic" });
       }
     } catch (error) {
       return res.status(500).json(error);
