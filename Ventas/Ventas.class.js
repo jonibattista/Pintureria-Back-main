@@ -40,14 +40,9 @@ Sale.init(
             allowNull: true,
             defaultValue: 0
         },
-        idPay: {
+        paymentId: {
             type: DataTypes.INTEGER,
             allowNull: true,
-        },
-        status: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            
         }
     },
     {

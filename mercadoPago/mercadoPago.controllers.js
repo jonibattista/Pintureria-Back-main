@@ -21,13 +21,12 @@ export const createOrder = async (req, res) => {
         items: items,
         notification_url: HTTPS + "/mp/webhook",
         back_urls: {
-          success: "http://localhost:3000/payment_success",
-          failure:  "http://localhost:3000/payment_failure",
-          pending:  "http://localhost:3000/payment_pending",
+          success: "http://localhost:3000/cartShop",
+          failure:  "http://localhost:3000/cartShop",
+          pending:  "http://localhost:3000/cartShop",
         },
       };
       const response = await mercadopago.preferences.create(preference);
-      console.log(response)
       res.status(200).json(response.body);
     } catch (error) {
       console.log(error)
