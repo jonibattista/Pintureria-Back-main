@@ -13,11 +13,21 @@ Sale.init(
         },
         idClient: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             references: {
                 model: 'Clients', 
                 key: 'id',
             },
+            defaultValue: 1,
+        },
+        idUser: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+            references: {
+                model: 'Users', 
+                key: 'id',
+            },
+            defaultValue: 1,
         },
         idEmp: {
             type: DataTypes.INTEGER,
@@ -41,7 +51,7 @@ Sale.init(
             defaultValue: 0
         },
         paymentId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             allowNull: true,
         }
     },

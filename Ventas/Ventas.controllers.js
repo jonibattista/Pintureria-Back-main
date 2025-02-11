@@ -5,7 +5,7 @@ import { Product } from "../Productos/Productos.class.js";
 
 
 export const getAll = async (req, res) => {
-    Sale.sync({alter:true})
+    Sale.sync()
     try {
         const result = await Sale.findAll();
         res.status(200).json(result);
@@ -28,7 +28,7 @@ export const getOne = async (req, res) => {
 export const add = async (req, res) => {
   Sale.sync();
   const trans = await sequelize.transaction();
-  const { idClient, idEmp, idBranch, total, saleProds, paymentId } = req.body;
+  const { idClient, idEmp, idBranch, total, saleProds, paymentId , idUser} = req.body;
   try {
     if (total === 0) {
       await trans.rollback();
@@ -36,6 +36,7 @@ export const add = async (req, res) => {
     }
     const sale = await Sale.create(
       {
+        idUser: idUser,
         idClient: idClient,
         idEmp: idEmp,
         idBranch: idBranch,
@@ -64,7 +65,7 @@ export const add = async (req, res) => {
     res.status(201).json({ message: "Venta creada con exito" });
   } catch (error) {
     await trans.rollback();
-    res.status(500).json({ message: "Error al crear venta" });
+    res.status(500).json({ message: "Error al crear venta", error });
   }
 };
 
