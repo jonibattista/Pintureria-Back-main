@@ -16,9 +16,12 @@ import {login,logout, register} from "./Usuarios/Usuario.controllers.js";
 import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
 import morgan from "morgan";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 
-const port = PORT;
+const port = process.env.PORT || 8080;
 
 //Abre servidor con Express
 export const app = express();
@@ -31,7 +34,7 @@ app.use(
 );
 
 
-app.use(morgan("dev"))
+// app.use(morgan("dev"))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -41,7 +44,7 @@ app.use(cookieParser());
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json({ message: "No autorizado" });
   try {
-    req.user = jwt.verify(token, SECRET_JWT);
+    req.user = jwt.verify(token, process.env.SECRET_JWT);
     next();
   } catch (error) {
     return res.status(403).json({ message: "Token inválido" });

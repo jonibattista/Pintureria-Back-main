@@ -1,3 +1,4 @@
 /node_modules
 /diagramas
 /BD.js
+.env

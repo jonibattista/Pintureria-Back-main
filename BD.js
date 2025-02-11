@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export const sequelize = new Sequelize("pintureria", "root", "root", {
+export const sequelize = new Sequelize("pintureria", process.env.DB_USER, process.env.DB_PSW, {
   host: "localhost",
   dialect: "mysql",
 });
