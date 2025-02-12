@@ -1,8 +1,9 @@
 import { User } from './Usuario.class.js';
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken"
-import { SECRET_JWT } from '../config.js';
+import dotenv from "dotenv"
 
+dotenv.config()
 
 export const getAll = async (req, res) => {
   await User.sync();
@@ -51,7 +52,7 @@ export const login = async (req, res) => {
     const user = await User.findOne({ where: { userName: userName } });
     const token = jwt.sign(
       { id: user.id, username: user.userName, role: user.role },
-      SECRET_JWT,
+      process.env.SECRET_JWT,
       { expiresIn: "1h" }
     );
 

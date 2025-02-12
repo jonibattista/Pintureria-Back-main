@@ -1,8 +1,10 @@
 import mercadopago from "mercadopago";
-import {URL, HTTPS, TEST_MERCADOPAGO} from "../config.js"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 mercadopago.configure({
-    access_token: TEST_MERCADOPAGO
+    access_token: process.env.TEST_MERCADOPAGO
 });
 
 export const createOrder = async (req, res) => {
@@ -19,7 +21,7 @@ export const createOrder = async (req, res) => {
     try {
       const preference = {
         items: items,
-        notification_url: HTTPS + "/mp/webhook",
+        notification_url: process.env.HTTPS + "/mp/webhook",
         back_urls: {
           success: "http://localhost:3000/cartShop",
           failure:  "http://localhost:3000/cartShop",
