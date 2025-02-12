@@ -7,7 +7,6 @@ import { routerSupplier } from "./Proveedores/Proveedores.routes.js";
 import { routerEmp } from "./Empleado/Empleados.routes.js";
 import { routerVenta } from "./Ventas/Ventas.routes.js";
 import { routerRenglon } from "./Ventas/Renglon/Renglon.routes.js";
-import { PORT, SECRET_JWT } from "./config.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import jwt from "jsonwebtoken";
@@ -17,6 +16,7 @@ import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import { sendEmail } from "./resend.js";
 
 dotenv.config()
 
@@ -79,6 +79,7 @@ app.get("/Products/:id", getOne);
 app.post("/register", register);
 app.post("/login", login);
 app.post("/logout", logout);
+app.post("/recover", sendEmail);
 
 app.use((_, res) => {
   return res.status(404).json({ message: "Pagina no encontrada" });

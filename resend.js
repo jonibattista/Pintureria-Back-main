@@ -1,21 +1,20 @@
 import { Resend } from 'resend';
 
-const resend = new Resend('re_czJyUETw_H4V5PtYVgdg8VuBEHkD9yiiv');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const email = async() => {
+export const sendEmail = async(res,req) => {
     try {
-        const res = await resend.emails.send({
-           from: 'Acme <onboarding@resend.dev>',
-           to: ['abirchmeyer@frro.utn.edu.ar'],
-           subject: 'hello world',
-           html: '<p>it works!</p>',
+    const response = await resend.emails.send({
+        from: 'Acme <onboarding@resend.dev>',
+        to: ['abirchmeyer@frro.utn.edu.ar'],
+        subject: 'hello world',
+        html: '<p>it works!</p>',
       });
-      console.log(res);
-        
+    console.log(response);
+    res.status(200).json(response)
     } catch (error) {
         console.log(error);
+        res.status(500).json(error)
     }
 
 }
-
-email();
