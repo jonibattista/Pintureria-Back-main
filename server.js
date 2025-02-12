@@ -11,12 +11,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import { routerCat } from "./Productos/Categorias/categorias.routes.js";
-import {login,logout, register} from "./Usuarios/Usuario.controllers.js";
+import {login,logout, register, updateUser} from "./Usuarios/Usuario.controllers.js";
 import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import { sendEmail } from "./resend.js";
+import { searchToken, sendEmail } from "./Recuperar_pass/recover.controllers.js";
 
 dotenv.config()
 
@@ -80,6 +80,8 @@ app.post("/register", register);
 app.post("/login", login);
 app.post("/logout", logout);
 app.post("/recover", sendEmail);
+app.get("/recover/:email", searchToken);
+app.patch("/users", updateUser);
 
 app.use((_, res) => {
   return res.status(404).json({ message: "Pagina no encontrada" });

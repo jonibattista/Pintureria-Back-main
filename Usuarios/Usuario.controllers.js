@@ -109,10 +109,9 @@ export const register = async (req, res) => {
   }
 };
 
-export const update = async (req, res) => {
-  const { id } = req.params;
-  const { userName, pswHash, role } = req.body;
-  if (dni) {
+export const updateUser = async (req, res) => {
+  const { userName, pswHash, role, email, id } = req.body;
+  if (userName) {
     const existingUser = await User.findOne({ where: { userName: userName } });
     if (existingUser && existingUser.id !== id) {
       return res
@@ -121,9 +120,15 @@ export const update = async (req, res) => {
     }
   }
   try {
+    if (pswHash) {
+      pswHash = await bcrypt.hash(pswHash, 10);
+    }
+    const whereClause = {};
+    if (id) whereClause.id = id;
+    if (email) whereClause.email = email;
     const result = await User.update(
-      { userName: userName, pswHash: pswHash, role: role },
-      { where: { id: id } }
+      { userName: userName, pswHash: pswHash, role: role, email:email },
+      { where: whereClause  }
     );
     res.status(200).json(result);
   } catch (error) {
