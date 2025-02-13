@@ -12,6 +12,7 @@ export const sendEmail = async (req, res) => {
     return res.status(400).json({ error: 'El email es obligatorio' });
   }
   const existingEmail = User.findOne({where:{email:email}})
+  console.log(existingEmail)
   if(!existingEmail) return res.status(404).json({ error: 'El email no corresponde a ningun usuario' });
   const token = crypto.randomBytes(32).toString("hex");
   try {
@@ -38,9 +39,22 @@ export const sendEmail = async (req, res) => {
 
 export const searchToken = async (req, res) => {
   Recover.sync();
-  const { queryToken } = req.params;
+  const { token } = req.params;
   try {
-    const response = await Recover.findOne({where:{token:queryToken}});
+    const response = await Recover.findOne({where:{token:token}});
+    res
+      .status(200)
+      .json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+export const deleteToken = async (req, res) => {
+  Recover.sync();
+  const { token } = req.params;
+  try {
+    const response = await Recover.destroy({where:{token:token}});
     res
       .status(200)
       .json(response);

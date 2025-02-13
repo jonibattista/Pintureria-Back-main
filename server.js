@@ -16,7 +16,7 @@ import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import { searchToken, sendEmail } from "./Recuperar_pass/recover.controllers.js";
+import { deleteToken, searchToken, sendEmail } from "./Recuperar_pass/recover.controllers.js";
 
 dotenv.config()
 
@@ -80,7 +80,8 @@ app.post("/register", register);
 app.post("/login", login);
 app.post("/logout", logout);
 app.post("/recover", sendEmail);
-app.get("/recover/:email", searchToken);
+app.get("/recover/:token", searchToken);
+app.delete("/recover/:token",deleteToken );
 app.patch("/users", updateUser);
 
 app.use((_, res) => {
