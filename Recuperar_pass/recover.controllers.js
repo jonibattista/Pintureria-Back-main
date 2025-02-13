@@ -12,7 +12,6 @@ export const sendEmail = async (req, res) => {
     return res.status(400).json({ error: 'El email es obligatorio' });
   }
   const existingEmail = User.findOne({where:{email:email}})
-  console.log(existingEmail)
   if(!existingEmail) return res.status(404).json({ error: 'El email no corresponde a ningun usuario' });
   const token = crypto.randomBytes(32).toString("hex");
   try {
@@ -23,8 +22,8 @@ export const sendEmail = async (req, res) => {
       subject: "Recuperacion de contraseña",
       html: `
           <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-          <p>El link expira el 15 minutos</p>
-          <a href="${process.env.URL_FRONT}/recover?token=${token}">Restablecer Contraseña</a>
+          <p>El link expira en 15 minutos</p>
+          <a href="http://localhost:3000/recover?token=${token}">Restablecer Contraseña</a>
         `,
     });
     console.log(response);
@@ -38,7 +37,7 @@ export const sendEmail = async (req, res) => {
 };
 
 export const searchToken = async (req, res) => {
-  Recover.sync();
+  Recover.sync({alter:true});
   const { token } = req.params;
   try {
     const response = await Recover.findOne({where:{token:token}});
@@ -50,6 +49,21 @@ export const searchToken = async (req, res) => {
     res.status(500).json(error);
   }
 };
+
+export const searchAllToken = async (req, res) => {
+  Recover.sync();
+  const { token } = req.params;
+  try {
+    const response = await Recover.findAll({where:{token:token}});
+    res
+      .status(200)
+      .json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
+
 export const deleteToken = async (req, res) => {
   Recover.sync();
   const { token } = req.params;
@@ -64,3 +78,16 @@ export const deleteToken = async (req, res) => {
   }
 };
 
+export const deleteById = async (req, res) => {
+  Recover.sync();
+  const { id} = req.params;
+  try {
+    const response = await Recover.destroy({where:{id:id}});
+    res
+      .status(200)
+      .json(response);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+};
