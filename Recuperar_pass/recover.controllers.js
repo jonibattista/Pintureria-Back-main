@@ -15,7 +15,8 @@ export const sendEmail = async (req, res) => {
   if(!existingEmail) return res.status(404).json({ error: 'El email no corresponde a ningun usuario' });
   const token = crypto.randomBytes(32).toString("hex");
   try {
-    await Recover.create({ email: email, token: token });
+    const date = Date.now()
+    await Recover.create({ email: email, token: token, createdAt:date });
     const response = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
       to: ["abirchmeyer@frro.utn.edu.ar"] /*email*/,
@@ -37,7 +38,7 @@ export const sendEmail = async (req, res) => {
 };
 
 export const searchToken = async (req, res) => {
-  Recover.sync({alter:true});
+  Recover.sync();
   const { token } = req.params;
   try {
     const response = await Recover.findOne({where:{token:token}});

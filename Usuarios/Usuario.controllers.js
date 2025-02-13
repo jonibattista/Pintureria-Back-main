@@ -51,7 +51,7 @@ export const login = async (req, res) => {
   try {
     const user = await User.findOne({ where: { userName: userName } });
     const token = jwt.sign(
-      { id: user.id, username: user.userName, role: user.role },
+      { id: user.id, userName: user.userName, role: user.role },
       process.env.SECRET_JWT,
       { expiresIn: "1h" }
     );
@@ -89,10 +89,8 @@ export const logout = (req, res) => {
 
 export const register = async (req, res) => {
   const { userName, email, pswHash, role } = req.body;
-  console.log(pswHash);
   const userExist = await User.findOne({ where: { userName: userName } });
-  if (userExist)
-    return res.status(400).json({ message: "Nombre de usuario existente" });
+  if (userExist) return res.status(400).json({ message: "Nombre de usuario existente" });
   const emialExist = await User.findOne({ where: { email: email } });
   if (emialExist) return res.status(400).json({ message: "email existente" });
   const hash = await bcrypt.hash(pswHash, 10);
@@ -119,20 +117,19 @@ export const updateUser = async (req, res) => {
         .json({ message: "El nombre de usuario ya existe." });
     }
   }
+  const hash = await bcrypt.hash(pswHash, 10);
   try {
-    if (pswHash) {
-      pswHash = await bcrypt.hash(pswHash, 10);
-    }
     const whereClause = {};
     if (id) whereClause.id = id;
     if (email) whereClause.email = email;
     const result = await User.update(
-      { userName: userName, pswHash: pswHash, role: role, email:email },
+      { userName: userName, pswHash: hash, role: role, email:email },
       { where: whereClause  }
     );
     res.status(200).json(result);
   } catch (error) {
-    res.status(500).json({ message: "Error al actualizar el usuario" });
+    console.log(error)
+    res.status(500).json({ message: "Error al actualizar el usuario", });
   }
 };
 
