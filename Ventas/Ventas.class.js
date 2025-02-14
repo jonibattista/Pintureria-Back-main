@@ -18,7 +18,6 @@ Sale.init(
                 model: 'Clients', 
                 key: 'id',
             },
-            defaultValue: 1,
         },
         idUser: {
             type: DataTypes.INTEGER,
@@ -27,7 +26,6 @@ Sale.init(
                 model: 'Users', 
                 key: 'id',
             },
-            defaultValue: 1,
         },
         idEmp: {
             type: DataTypes.INTEGER,
