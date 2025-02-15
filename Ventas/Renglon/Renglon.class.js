@@ -26,7 +26,7 @@ Row.init(
         key: "id",
       },
     },
-    description: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
