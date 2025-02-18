@@ -1,6 +1,8 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../BD.js";
 
+
+// Clase para la creación de la tabla Client
 export class Client extends Model {}
 
 Client.init(

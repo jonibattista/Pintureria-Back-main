@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize"
 import { sequelize } from "../../BD.js"
 
-
+//Clase para la creación de la tabla Category
 export class Category extends Model { }
 
 Category.init(

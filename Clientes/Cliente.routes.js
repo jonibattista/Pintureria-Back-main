@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { add, getAll, getByDNI, remove, update } from './Cliente.controllers.js';
 
+
+// Rutas para la tabla Client
 export const routerCli = Router();
 
 routerCli.get('/', getAll);

@@ -1,5 +1,7 @@
 import { Client } from "./Cliente.class.js";
 
+// Funciones para el manejo de la tabla Client
+
 export const getAll = async (req, res) => {
   await Client.sync();
   try {
