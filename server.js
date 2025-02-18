@@ -42,25 +42,30 @@ app.use(cookieParser());
 
 
 // Middleware para autenticar la sesión del usuario.
-// const authenticate = (req, res, next) => {
-//   const token = req.cookies.access_token;
-//   if (!token) return res.status(401).json({ message: "No autorizado" });
-//   try {
-//     req.user = jwt.verify(token, process.env.SECRET_JWT);
-//     next();
-//   } catch (error) {
-//     return res.status(403).json({ message: "Token inválido" });
-//   }
-// };
+const authenticate = (req, res, next) => {
+  const token = req.cookies.access_token;
+  if (!token) return res.status(401).json({ message: "No autorizado" });
+  try {
+    req.user = jwt.verify(token, process.env.SECRET_JWT);
+    next();
+  } catch (error) {
+    return res.status(403).json({ message: "Token inválido" });
+  }
+};
 
 
 // Middleware para autorizar roles de usuario.
-// const authorizedRole = (role) => {
-//   return (req, res, next) => {
-//     if (!role.includes(req.user.role)) return res.status(403).json({ message: "No autorizado" });
-//     next();
-//   };
-// };
+const authorizedRole = (role) => {
+  return (req, res, next) => {
+    if (!role.includes(req.user.role)) return res.status(403).json({ message: "No autorizado" });
+    next();
+  };
+};
+
+// Ruta para verificar si el usuario está autorizado.
+app.get("/authorized", authenticate, (req, res) => {
+  res.status(200).json(req.user);
+});
 
 // Rutas para el admin.
 app.use("/Branches",/* authenticate, authorizedRole([1]),*/ routerSuc);
@@ -74,10 +79,6 @@ app.use("/Rows",/*authenticate, authorizedRole([1, 2]),*/ routerRenglon);
 app.use("/mp",/* authenticate,*/routerMP);
 app.post("/category",/*authenticate ,authorizedRole([1, 2]),*/add);
 
-// Ruta para verificar si el usuario está autorizado.
-// app.get("/authorized", authenticate, (req, res) => {
-//   res.status(200).json(req.user);
-// });
 
 // Ruta para verificar el estado de la API.
 app.get("/", (req, res) => {
