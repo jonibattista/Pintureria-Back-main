@@ -31,14 +31,14 @@ Product.init(
         idProv: {
             type: DataTypes.INTEGER,
             references:{
-                model:"Suppliers",
+                model:"suppliers",
                 key: "id"
             },
         },
         idCat: {
             type: DataTypes.INTEGER,
             references:{
-                model:"Categories",
+                model:"categories",
                 key: "id"
             },
         },

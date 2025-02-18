@@ -15,7 +15,7 @@ Sale.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
-                model: 'Clients', 
+                model: 'clients', 
                 key: 'id',
             },
         },
@@ -23,7 +23,7 @@ Sale.init(
             type: DataTypes.INTEGER,
             allowNull: true,
             references: {
-                model: 'Users', 
+                model: 'users', 
                 key: 'id',
             },
         },
@@ -31,7 +31,7 @@ Sale.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Employees', 
+                model: 'employees', 
                 key: 'id', 
             },
         },
@@ -39,7 +39,7 @@ Sale.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model: 'Branches',
+                model: 'branches',
                 key: 'id',
             },
         },
