@@ -14,7 +14,7 @@ Row.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Sales",
+        model: "sales",
         key: "id",
       },
     },
@@ -22,7 +22,7 @@ Row.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Products",
+        model: "products",
         key: "id",
       },
     },
