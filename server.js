@@ -30,7 +30,12 @@ const port = process.env.PORT || 8080;
  */
 export const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin:process.env.URL_FRONT,
+  credentials: true,
+  methods: ["GET", "POST", "PUT","PATCH", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -67,7 +72,7 @@ app.use("/Suppliers", /*authenticate, authorizedRole([1, 2]),*/ routerSupplier);
 app.use("/Sales", /*authenticate, authorizedRole([1, 2]),*/ routerVenta);
 app.use("/Rows",/*authenticate, authorizedRole([1, 2]),*/ routerRenglon);
 app.use("/mp",/* authenticate,*/routerMP);
-app.get("/category",/*authenticate ,authorizedRole([1, 2]),*/add);
+app.post("/category",/*authenticate ,authorizedRole([1, 2]),*/add);
 
 // Ruta para verificar si el usuario está autorizado.
 // app.get("/authorized", authenticate, (req, res) => {
