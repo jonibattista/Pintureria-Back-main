@@ -73,7 +73,7 @@ app.use("/mp",routerMP);
 app.get("/authorized", authenticate, (req, res) => {
   res.status(200).json(req.user);
 });
-
+app.get("/", (req, res) => {res.status(200).json("API Pintureria")} )
 app.get("/Products", getAll);
 app.get("/Products/:id", getOne);
 app.post("/register", register);
