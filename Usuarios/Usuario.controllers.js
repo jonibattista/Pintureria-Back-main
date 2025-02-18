@@ -68,12 +68,10 @@ export const login = async (req, res) => {
       .cookie("access_token", token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60,
-        secure: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production" ? true : false,
+        sameSite: process.env.NODE_ENV === "production"? "none" : "lax",
       })
       .json(user.role);
-    //  .send({token:token});
   } catch (error) {
     res.status(401).json({ message: "Error en el inicio de sesión" });
   }
