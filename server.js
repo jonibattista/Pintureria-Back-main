@@ -10,6 +10,7 @@ import { routerSupplier } from "./Proveedores/Proveedores.routes.js";
 import { routerEmp } from "./Empleado/Empleados.routes.js";
 import { routerVenta } from "./Ventas/Ventas.routes.js";
 import { routerRenglon } from "./Ventas/Renglon/Renglon.routes.js";
+import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { login, logout, register, updateUser } from "./Usuarios/Usuario.controllers.js";
@@ -25,9 +26,8 @@ dotenv.config();
 
 const port = process.env.PORT || 8080;
 
-/**
- * @constant {object} app - instancia de la aplicación Express.
- */
+//instancia de la aplicación Express.
+
 export const app = express();
 
 app.use(cors({
@@ -46,7 +46,9 @@ const authenticate = (req, res, next) => {
   const token = req.cookies.access_token;
   if (!token) return res.status(401).json({ message: "No autorizado" });
   try {
+    console.log(token);
     req.user = jwt.verify(token, process.env.SECRET_JWT);
+    console.log(req.user);
     next();
   } catch (error) {
     return res.status(403).json({ message: "Token inválido" });
@@ -67,26 +69,8 @@ app.get("/authorized", authenticate, (req, res) => {
   res.status(200).json(req.user);
 });
 
-// Rutas para el admin.
-app.use("/Branches",/* authenticate, authorizedRole([1]),*/ routerSuc);
-app.use("/Clients", /*authenticate, authorizedRole([1, 2]),*/ routerCli);
-app.use("/Products", /*authenticate, authorizedRole([1, 2]),*/ routerProd);
-app.use("/Employees", /*authenticate, authorizedRole([1]),*/ routerEmp);
-app.use("/users", /*authenticate, authorizedRole([1]),*/ routerUsu);
-app.use("/Suppliers", /*authenticate, authorizedRole([1, 2]),*/ routerSupplier);
-app.use("/Sales", /*authenticate, authorizedRole([1, 2]),*/ routerVenta);
-app.use("/Rows",/*authenticate, authorizedRole([1, 2]),*/ routerRenglon);
-app.use("/mp",/* authenticate,*/routerMP);
-app.post("/category",/*authenticate ,authorizedRole([1, 2]),*/add);
-
-
-// Ruta para verificar el estado de la API.
-app.get("/", (req, res) => {
-  res.status(200).json("API Pintureria");
-});
-
 // Rutas de informacion para el usuario.
-app.get("/Rows"/*,authenticate */,getBySale);
+app.get("/Rows",authenticate ,getBySale);
 app.get("/category", getAllCat);
 app.get("/Products", getAll);
 app.get("/Products/:id", getOne);
@@ -98,6 +82,24 @@ app.get("/recover", searchAllToken);
 app.get("/recover/:token", searchToken);
 app.delete("/recover/:token", deleteToken);
 app.patch("/users", updateUser);
+// Rutas restringidas.
+app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
+app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
+app.use("/Products", authenticate, authorizedRole([1, 2]), routerProd);
+app.use("/Employees", authenticate, authorizedRole([1]), routerEmp);
+app.use("/users", authenticate, authorizedRole([1]), routerUsu);
+app.use("/Suppliers", authenticate, authorizedRole([1, 2]), routerSupplier);
+app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
+app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
+app.use("/mp", authenticate,routerMP);
+app.post("/category",authenticate ,authorizedRole([1, 2]),add);
+
+
+// Ruta para verificar el estado de la API.
+app.get("/", (req, res) => {
+  res.status(200).json("API Pintureria");
+});
+
 
 
 //Middleware para manejar errores 404.
