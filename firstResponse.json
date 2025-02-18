@@ -1,0 +1,37 @@
+{
+    "Products":[
+    {
+        "routes": [
+            {
+                "method": "GET",
+                "path": "/Products",
+                "description": "Get all products"
+            },
+            {
+                "method": "POST",
+                "path": "/Products",
+                "description": "Create a new product"
+            },
+            {
+                "method": "GET",
+                "path": "/api/products/:id",
+                "description": "Get a product by ID"
+            },
+            {
+                "method": "PUT",
+                "path": "/api/products/:id",
+                "description": "Update a product by ID"
+            },
+            {
+                "method": "DELETE",
+                "path": "/api/products/:id",
+                "description": "Delete a product by ID"
+            }
+        ]
+    }
+       
+
+    ]
+
+    
+}

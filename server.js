@@ -12,8 +12,6 @@ import { routerVenta } from "./Ventas/Ventas.routes.js";
 import { routerRenglon } from "./Ventas/Renglon/Renglon.routes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import jwt from "jsonwebtoken";
-import { routerCat } from "./Productos/Categorias/categorias.routes.js";
 import { login, logout, register, updateUser } from "./Usuarios/Usuario.controllers.js";
 import { getAll, getOne } from "./Productos/Productos.controllers.js";
 import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
