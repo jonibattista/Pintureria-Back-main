@@ -73,6 +73,18 @@ const authorizedRole = (role) => {
   };
 };
 
+// Rutas de informacion para,,l usuario.
+app.get("/category", getAllCat);
+app.get("/Products/:id", getOne);
+app.get("/Products", getAll);
+app.get("/recover", searchAllToken);
+app.get("/recover/:token", searchToken);
+app.post("/register", register);
+app.post("/login", login);
+app.post("/logout", logout);
+app.post("/recover", sendEmail);
+app.delete("/recover/:token", deleteToken);
+app.patch("/users", updateUser);
 
 // Rutas restringidas.
 app.get("/Rows/:id",authenticate ,getBySale);
@@ -87,18 +99,7 @@ app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
 app.use("/mp", authenticate,routerMP);
 app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 
-// Rutas de informacion para,,l usuario.
-app.get("/category", getAllCat);
-app.get("/Products/:id", getOne);
-app.get("/Products", getAll);
-app.get("/recover", searchAllToken);
-app.get("/recover/:token", searchToken);
-app.post("/register", register);
-app.post("/login", login);
-app.post("/logout", logout);
-app.post("/recover", sendEmail);
-app.delete("/recover/:token", deleteToken);
-app.patch("/users", updateUser);
+
 
 // Ruta para verificar si el usuario está autorizado.
 app.get("/authorized", authenticate, (req, res) => {

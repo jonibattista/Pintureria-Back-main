@@ -5,12 +5,12 @@ import { Product } from "../Productos/Productos.class.js";
 
 
 export const getAll = async (req, res) => {
-    Sale.sync()
+    Sale.sync({alter:true})
     try {
         const result = await Sale.findAll();
         res.status(200).json(result);
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener las ventas." ,error });
+        res.status(500).json({ message: "Error al obtener las ventas." });
     }
 };
 

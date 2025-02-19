@@ -80,6 +80,6 @@ export const remove = async (req, res) => {
       .status(200)
       .send({ message: `Sucursal número ${id} eliminada con exito` });
   } catch (error) {
-    res.status(500).json({message: "Error al eliminar sucursal"});
+    res.status(500).json({message: "Error al eliminar sucursal", error});
   }
 };
