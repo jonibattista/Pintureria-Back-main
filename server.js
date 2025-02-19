@@ -30,30 +30,50 @@ const port = process.env.PORT || 8080;
 
 export const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+
 app.use(cors({
   origin:process.env.URL_FRONT,
   credentials: true,
   methods: ["GET", "POST", "PUT","PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(cookieParser());
 
 
-// Middleware para autenticar la sesión del usuario.
 const authenticate = (req, res, next) => {
-  const token = req.cookies.access_token;
-  if (!token) return res.status(401).json({ message: "No autorizado" });
+  console.log("Cookies recibidas:", req.cookies); // Para verificar si la cookie llega al backend
+
+  const token = req.cookies?.access_token; // Asegurarse de que cookies exista
+
+  if (!token) {
+    console.log("2 - No se encontró token en la cookie");
+    return res.status(401).json({ message: "No existe token: No autorizado" });
+  }
+
   try {
-    console.log(token);
     req.user = jwt.verify(token, process.env.SECRET_JWT);
-    console.log(req.user);
+    console.log("3 - Token verificado correctamente:", req.user);
     next();
   } catch (error) {
+    console.error("4 - Error al verificar token:", error.message);
     return res.status(403).json({ message: "Token inválido" });
   }
 };
+
+// Middleware para autenticar la sesión del usuario.
+// const authenticate = (req, res, next) => {
+//   const token = req.cookies.access_token;
+//   console.log("1",token);
+//   if (!token) return res.status(401).json({ message: "No existe token: No autorizado" });
+//   try {
+//     req.user = jwt.verify(token, process.env.SECRET_JWT);
+//     next();
+//   } catch (error) {
+//     return res.status(403).json({ message: "Token inválido" });
+//   }
+// };
 
 
 // Middleware para autorizar roles de usuario.
@@ -64,24 +84,7 @@ const authorizedRole = (role) => {
   };
 };
 
-// Ruta para verificar si el usuario está autorizado.
-app.get("/authorized", authenticate, (req, res) => {
-  res.status(200).json(req.user);
-});
 
-// Rutas de informacion para el usuario.
-app.get("/Rows",authenticate ,getBySale);
-app.get("/category", getAllCat);
-app.get("/Products", getAll);
-app.get("/Products/:id", getOne);
-app.post("/register", register);
-app.post("/login", login);
-app.post("/logout", logout);
-app.post("/recover", sendEmail);
-app.get("/recover", searchAllToken);
-app.get("/recover/:token", searchToken);
-app.delete("/recover/:token", deleteToken);
-app.patch("/users", updateUser);
 // Rutas restringidas.
 app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
 app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
@@ -93,6 +96,26 @@ app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
 app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
 app.use("/mp", authenticate,routerMP);
 app.post("/category",authenticate ,authorizedRole([1, 2]),add);
+
+// Rutas de informacion para,,l usuario.
+app.get("/Rows",authenticate ,getBySale);
+app.get("/category", getAllCat);
+app.get("/Products/:id", getOne);
+app.get("/Products", getAll);
+app.get("/recover", searchAllToken);
+app.get("/recover/:token", searchToken);
+app.post("/register", register);
+app.post("/login", login);
+app.post("/logout", logout);
+app.post("/recover", sendEmail);
+app.delete("/recover/:token", deleteToken);
+app.patch("/users", updateUser);
+
+// Ruta para verificar si el usuario está autorizado.
+app.get("/authorized", authenticate, (req, res) => {
+  res.status(200).json(req.user);
+});
+
 
 
 // Ruta para verificar el estado de la API.
@@ -110,5 +133,5 @@ app.use((_, res) => {
 
 // Inicia el servidor y escucha en el puerto especificado.
 app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+  console.log(`Servidor escuchando en ${process.env.URL}`);
 });
