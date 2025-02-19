@@ -20,7 +20,7 @@ import dotenv from "dotenv";
 import { deleteToken, searchAllToken, searchToken, sendEmail } from "./Recuperar_pass/recover.controllers.js";
 import { getBySale } from "./Ventas/Renglon/Renglon.controllers.js";
 import { add, getAllCat } from "./Productos/Categorias/categorias.controllers.js";
-
+import { firstResponse } from "./firstResponse.js";
 dotenv.config();
 
 
@@ -42,6 +42,7 @@ app.use(cors({
 }));
 
 
+// Middleware para autenticar la sesión del usuario.
 const authenticate = (req, res, next) => {
   console.log("Cookies recibidas:", req.cookies); // Para verificar si la cookie llega al backend
 
@@ -62,18 +63,6 @@ const authenticate = (req, res, next) => {
   }
 };
 
-// Middleware para autenticar la sesión del usuario.
-// const authenticate = (req, res, next) => {
-//   const token = req.cookies.access_token;
-//   console.log("1",token);
-//   if (!token) return res.status(401).json({ message: "No existe token: No autorizado" });
-//   try {
-//     req.user = jwt.verify(token, process.env.SECRET_JWT);
-//     next();
-//   } catch (error) {
-//     return res.status(403).json({ message: "Token inválido" });
-//   }
-// };
 
 
 // Middleware para autorizar roles de usuario.
@@ -86,6 +75,7 @@ const authorizedRole = (role) => {
 
 
 // Rutas restringidas.
+app.get("/Rows/:id",authenticate ,getBySale);
 app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
 app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
 app.use("/Products", authenticate, authorizedRole([1, 2]), routerProd);
@@ -98,7 +88,6 @@ app.use("/mp", authenticate,routerMP);
 app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 
 // Rutas de informacion para,,l usuario.
-app.get("/Rows",authenticate ,getBySale);
 app.get("/category", getAllCat);
 app.get("/Products/:id", getOne);
 app.get("/Products", getAll);
@@ -120,7 +109,7 @@ app.get("/authorized", authenticate, (req, res) => {
 
 // Ruta para verificar el estado de la API.
 app.get("/", (req, res) => {
-  res.status(200).json("API Pintureria");
+  res.status(200).json(firstResponse);
 });
 
 
