@@ -19,12 +19,12 @@ export const sendEmail = async (req, res) => {
     await Recover.create({ email: email, token: token, createdAt:date });
     const response = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
-      to: ["abirchmeyer@frro.utn.edu.ar"] /*email*/,
+      to: email,
       subject: "Recuperacion de contraseña",
       html: `
           <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
           <p>El link expira en 15 minutos</p>
-          <a href="http://localhost:3000/recover?token=${token}">Restablecer Contraseña</a>
+          <a href="${process.env.URL_FRONT} ?token=${token}">Restablecer Contraseña</a>
         `,
     });
     console.log(response);
