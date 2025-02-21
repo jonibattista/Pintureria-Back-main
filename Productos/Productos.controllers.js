@@ -24,18 +24,23 @@ export const getOne = async (req, res) => {
 
 export const add = async (req, res) => {
   Product.sync();
-  const { title,description, price, stock, idProv, idCat ,sku} = req.body;
+  const { title,description, price, stock, idProv, idCat ,sku, productsArray} = req.body;
   try {
-    const result = await Product.create({
-      sku:sku,
-      description: description,
-      title: title,
-      price: price,
-      stock: stock,
-      idProv: idProv,
-      idCat: idCat,
-    });
-    res.status(201).json(result);
+    if(productsArray){
+      const result= await Product.bulkCreate(productsArray)
+      res.status(201).json(result)
+    }else {
+      const result = await Product.create({
+        sku:sku,
+        description: description,
+        title: title,
+        price: price,
+        stock: stock,
+        idProv: idProv,
+        idCat: idCat,
+      });
+      res.status(201).json(result);
+    }
   } catch (error) {
     res.status(500).json({ message: "error al agregar los productos" });
   }

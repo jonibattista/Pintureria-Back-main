@@ -50,10 +50,6 @@ export const add = async (req, res) => {
       return prod;
     });
     await Row.bulkCreate(completeRows, { transaction: trans });
-    const datos = saleProds.map((prod) => {
-      const total = prod.stock - prod.quantity;
-      return { id: prod.idProduct, stock: total };
-    });
     for (const prod of saleProds) {
       const totalStock = prod.stock - prod.quantity;
       await Product.update(
