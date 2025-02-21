@@ -30,17 +30,9 @@ Product.init(
         },
         idProv: {
             type: DataTypes.INTEGER,
-            references:{
-                model:"suppliers",
-                key: "id"
-            },
         },
         idCat: {
             type: DataTypes.INTEGER,
-            references:{
-                model:"categories",
-                key: "id"
-            },
         },
         imgUrl: {
             type: DataTypes.STRING,

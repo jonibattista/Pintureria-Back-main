@@ -2,7 +2,7 @@ import { Product } from "./Productos.class.js";
 
 
 export const getAll = async (req, res) => {
-  Product.sync();
+  Product.sync({alter:true});
   try {
     const result = await Product.findAll();
     res.status(200).json(result);
