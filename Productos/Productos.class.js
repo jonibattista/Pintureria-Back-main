@@ -11,6 +11,10 @@ Product.init(
             autoIncrement: true,
             primaryKey: true,
         },
+        sku: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,

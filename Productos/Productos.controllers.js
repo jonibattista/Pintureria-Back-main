@@ -24,9 +24,10 @@ export const getOne = async (req, res) => {
 
 export const add = async (req, res) => {
   Product.sync();
-  const { title,description, price, stock, idProv, idCat } = req.body;
+  const { title,description, price, stock, idProv, idCat ,sku} = req.body;
   try {
     const result = await Product.create({
+      sku:sku,
       description: description,
       title: title,
       price: price,
@@ -43,10 +44,11 @@ export const add = async (req, res) => {
 export const update = async (req, res) => {
   Product.sync();
   const { id } = req.params;
-  const {title, description, price, stock, idProv, idCat } = req.body;
+  const {title, description, price, stock, idProv, idCat,sku } = req.body;
   try {
     const result = await Product.update(
       {
+        sku:sku,
         description: description,
         title: title,
         price: price,

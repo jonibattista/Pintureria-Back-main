@@ -16,21 +16,20 @@ export const sendEmail = async (req, res) => {
   const token = crypto.randomBytes(32).toString("hex");
   try {
     const date = Date.now()
-    await Recover.create({ email: email, token: token, createdAt:date });
     const response = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: email,
+      from: process.env.NODE_ENV === "production" ? "soporte@pintureriasriocolor.online":"Acme <onboarding@resend.dev>",
+      to: process.env.NODE_ENV === "production" ? email : "abirchmeyer@frro.utn.edu.ar",
       subject: "Recuperacion de contraseña",
       html: `
-          <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-          <p>El link expira en 15 minutos</p>
-          <a href="${process.env.URL_FRONT} ?token=${token}">Restablecer Contraseña</a>
-        `,
-    });
-    console.log(response);
-    res
-      .status(200)
-      .json({ message: "Correo de recuperacion enviado con exito" });
+      <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+      <p>El link expira en 15 minutos</p>
+          <a href="${process.env.URL_FRONT}/recover?token=${token}">Restablecer Contraseña</a>
+          `,
+        });
+        console.log(response);
+      if(!response.ok)return res.status(500).json({message:"error al enviar mail de recuperacion"})
+      await Recover.create({ email: email, token: token, createdAt:date });
+      res.status(200).json({ message: "Correo de recuperacion enviado con exito" });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
