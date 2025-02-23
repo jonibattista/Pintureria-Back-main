@@ -18,16 +18,16 @@ export const sendEmail = async (req, res) => {
     const date = Date.now()
     const response = await resend.emails.send({
       from: process.env.NODE_ENV === "production" ? "soporte@pintureriasriocolor.online":"Acme <onboarding@resend.dev>",
-      to: process.env.NODE_ENV === "production" ? email : "abirchmeyer@frro.utn.edu.ar",
+      to: process.env.NODE_ENV === "production" ? email : ["abirchmeyer@frro.utn.edu.ar"],
       subject: "Recuperacion de contraseña",
       html: `
       <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
       <p>El link expira en 15 minutos</p>
-          <a href="${process.env.URL_FRONT}/recover?token=${token}">Restablecer Contraseña</a>
+          <a href="${process.env.URL_FRONT}/#/recover?token=${token}">Restablecer Contraseña</a>
           `,
         });
         console.log(response);
-      if(!response.ok)return res.status(500).json({message:"error al enviar mail de recuperacion"})
+      if(response.status !== 200) return res.status(500).json({message:"error al enviar mail de recuperacion"})
       await Recover.create({ email: email, token: token, createdAt:date });
       res.status(200).json({ message: "Correo de recuperacion enviado con exito" });
   } catch (error) {
@@ -37,7 +37,7 @@ export const sendEmail = async (req, res) => {
 };
 
 export const searchToken = async (req, res) => {
-  Recover.sync();
+  Recover.sync({alter:true});
   const { token } = req.params;
   try {
     const response = await Recover.findOne({where:{token:token}});
