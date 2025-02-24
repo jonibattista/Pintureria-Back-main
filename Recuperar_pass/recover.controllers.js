@@ -26,8 +26,7 @@ export const sendEmail = async (req, res) => {
           <a href="${process.env.URL_FRONT}/#/recover?token=${token}">Restablecer Contraseña</a>
           `,
         });
-        console.log(response);
-      if(response.status !== 200) return res.status(500).json({message:"error al enviar mail de recuperacion"})
+      if(!response.data) return res.status(500).json({message:"error al enviar mail de recuperacion"})
       await Recover.create({ email: email, token: token, createdAt:date });
       res.status(200).json({ message: "Correo de recuperacion enviado con exito" });
   } catch (error) {
