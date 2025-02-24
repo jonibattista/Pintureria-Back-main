@@ -4,8 +4,6 @@ import { getAll, getByLevel, getByUserEmail, getByUserName, remove } from './Usu
 export const routerUsu = Router();
 
 routerUsu.get('/', getAll);
-routerUsu.get('/name/:userName', getByUserName);
 routerUsu.get('/role/:role',  getByLevel);
 routerUsu.delete('/:id', remove);
-routerUsu.get('/email/:email', getByUserEmail);
 

@@ -21,6 +21,7 @@ import { deleteToken, searchAllToken, searchToken, sendEmail } from "./Recuperar
 import { getBySale } from "./Ventas/Renglon/Renglon.controllers.js";
 import { add, getAllCat } from "./Productos/Categorias/categorias.controllers.js";
 import { firstResponse } from "./firstResponse.js";
+import { publicRouterUser } from "./Usuarios/Usuario.PublicRoutes.js";
 dotenv.config();
 
 
@@ -73,7 +74,7 @@ const authorizedRole = (role) => {
   };
 };
 
-// Rutas de informacion para,,l usuario.
+// Rutas de publicas.
 app.get("/category", getAllCat);
 app.get("/Products/:id", getOne);
 app.get("/Products", getAll);
@@ -84,7 +85,8 @@ app.post("/login", login);
 app.post("/logout", logout);
 app.post("/recover", sendEmail);
 app.delete("/recover/:token", deleteToken);
-app.patch("/users", updateUser);
+app.use("/users", publicRouterUser);
+
 
 // Rutas restringidas.
 app.get("/Rows/:id",authenticate ,getBySale);

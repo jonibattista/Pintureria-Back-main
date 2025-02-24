@@ -19,7 +19,13 @@ export const getByLevel = async (req, res) => {
   const role = req.params.role;
   try {
     const result = await User.findAll({ where: { role: role } });
-    res.status(200).json(result);
+    const user = {
+      id:result.id,
+      userName: result.userName,
+      email: result.email,
+      role: result.role
+    }
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener los usuarios" });
   }
@@ -30,7 +36,13 @@ export const getByUserName = async (req, res) => {
   console.log(userName);
   try {
     const result = await User.findOne({ where: { userName: userName } });
-    res.status(200).json(result);
+    const user = {
+      id:result.id,
+      userName: result.userName,
+      email: result.email,
+      role: result.role
+    }
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener el usuario" });
   }
@@ -40,7 +52,13 @@ export const getByUserEmail = async (req, res) => {
   const { email } = req.params;
   try {
     const result = await User.findOne({ where: { email: email } });
-    res.status(200).json(result);
+    const user = {
+      id:result.id,
+      userName: result.userName,
+      email: result.email,
+      role: result.role
+    }
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener el usuario" });
   }
