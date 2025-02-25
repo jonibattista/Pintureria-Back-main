@@ -27,6 +27,7 @@ export const add = async (req, res) => {
   const { title,description, price, stock, idProv, idCat ,sku, productsArray} = req.body;
   try {
     if(productsArray){
+      console.log(productsArray)
       const result= await Product.bulkCreate(productsArray)
       res.status(201).json(result)
     }else {
@@ -42,7 +43,7 @@ export const add = async (req, res) => {
       res.status(201).json(result);
     }
   } catch (error) {
-    res.status(500).json({ message: "error al agregar los productos" });
+    res.status(500).json({ message: "error al agregar los productos" , error});
   }
 };
 
