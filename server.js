@@ -22,7 +22,7 @@ import { getBySale } from "./Ventas/Renglon/Renglon.controllers.js";
 import { add, getAllCat } from "./Productos/Categorias/categorias.controllers.js";
 import { firstResponse } from "./firstResponse.js";
 import { publicRouterUser } from "./Usuarios/Usuario.PublicRoutes.js";
-import { uploadImg } from "./uploads/images.controllers.js";
+import { upload, uploadImg } from "./Imagenes/images.controllers.js";
 dotenv.config();
 
 
@@ -35,7 +35,7 @@ export const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/images",express.static("images"))
+app.use("/uploads", express.static("uploads"));
 
 app.use(cors({
   origin:process.env.URL_FRONT,
@@ -91,6 +91,7 @@ app.use("/users", publicRouterUser);
 
 
 // Rutas restringidas.
+app.post("/upload" ,authenticate, authorizedRole([1, 2]),upload.single("imagen") ,uploadImg);
 app.get("/Rows/:id",authenticate ,getBySale);
 app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
 app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
@@ -101,7 +102,6 @@ app.use("/Suppliers", authenticate, authorizedRole([1, 2]), routerSupplier);
 app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
 app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
 app.use("/mp", authenticate,routerMP);
-app.post("/upload",authenticate, authorizedRole([1, 2]), uploadImg);
 app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 
 

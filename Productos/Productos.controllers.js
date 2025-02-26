@@ -24,7 +24,7 @@ export const getOne = async (req, res) => {
 
 export const add = async (req, res) => {
   Product.sync();
-  const { title,description, price, stock, idProv, idCat ,sku, productsArray} = req.body;
+  const { title,description, price, stock, idProv, idCat ,sku, productsArray , imgUrl} = req.body;
   try {
     if(productsArray){
       console.log(productsArray)
@@ -32,6 +32,7 @@ export const add = async (req, res) => {
       res.status(201).json(result)
     }else {
       const result = await Product.create({
+        imgUrl:imgUrl,
         sku:sku,
         description: description,
         title: title,
@@ -50,10 +51,11 @@ export const add = async (req, res) => {
 export const update = async (req, res) => {
   Product.sync();
   const { id } = req.params;
-  const {title, description, price, stock, idProv, idCat,sku } = req.body;
+  const {title, description, price, stock, idProv, idCat,sku,imgUrl } = req.body;
   try {
     const result = await Product.update(
       {
+        imgUrl:imgUrl,
         sku:sku,
         description: description,
         title: title,
