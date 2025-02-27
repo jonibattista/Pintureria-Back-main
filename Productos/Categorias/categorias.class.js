@@ -16,6 +16,10 @@ Category.init(
             allowNull: false,
             unique: true,
         },
+        imgUrl: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     },
     {
         sequelize,

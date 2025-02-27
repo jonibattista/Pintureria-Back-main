@@ -19,7 +19,7 @@ import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
 import dotenv from "dotenv";
 import { deleteToken, searchAllToken, searchToken, sendEmail } from "./Recuperar_pass/recover.controllers.js";
 import { getBySale } from "./Ventas/Renglon/Renglon.controllers.js";
-import { add, getAllCat } from "./Productos/Categorias/categorias.controllers.js";
+import { add, getAllCat, update } from "./Productos/Categorias/categorias.controllers.js";
 import { firstResponse } from "./firstResponse.js";
 import { publicRouterUser } from "./Usuarios/Usuario.PublicRoutes.js";
 import { upload, uploadImg } from "./Imagenes/images.controllers.js";
@@ -93,6 +93,8 @@ app.use("/users", publicRouterUser);
 // Rutas restringidas.
 app.post("/upload" ,authenticate, authorizedRole([1, 2]),upload.single("imagen") ,uploadImg);
 app.get("/Rows/:id",authenticate ,getBySale);
+app.patch("/category/:id",authenticate ,authorizedRole([1, 2]),update);
+app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
 app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
 app.use("/Products", authenticate, authorizedRole([1, 2]), routerProd);
@@ -102,7 +104,6 @@ app.use("/Suppliers", authenticate, authorizedRole([1, 2]), routerSupplier);
 app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
 app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
 app.use("/mp", authenticate,routerMP);
-app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 
 
 
