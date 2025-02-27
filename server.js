@@ -92,17 +92,17 @@ app.use("/users", publicRouterUser);
 
 // Rutas restringidas.
 app.post("/upload" ,authenticate, authorizedRole([1, 2]),upload.single("imagen") ,uploadImg);
-app.get("/Rows/:id",/*authenticate ,*/getBySale);
-app.use("/Branches", /*authenticate, authorizedRole([1]),*/ routerSuc);
-app.use("/Clients", /*authenticate, authorizedRole([1, 2]),*/ routerCli);
-app.use("/Products",/* authenticate, authorizedRole([1, 2]),*/ routerProd);
-app.use("/Employees",/* authenticate, authorizedRole([1]),*/ routerEmp);
-app.use("/users",/* authenticate, authorizedRole([1]),*/ routerUsu);
-app.use("/Suppliers",/* authenticate, authorizedRole([1, 2]),*/ routerSupplier);
-app.use("/Sales",/* authenticate, authorizedRole([1, 2]),*/ routerVenta);
-app.use("/Rows",/*authenticate, authorizedRole([1, 2]),*/ routerRenglon);
-app.use("/mp", /*authenticate,*/routerMP);
-app.post("/category",/*authenticate ,authorizedRole([1, 2]),*/add);
+app.get("/Rows/:id",authenticate ,getBySale);
+app.use("/Branches", authenticate, authorizedRole([1]), routerSuc);
+app.use("/Clients", authenticate, authorizedRole([1, 2]), routerCli);
+app.use("/Products", authenticate, authorizedRole([1, 2]), routerProd);
+app.use("/Employees", authenticate, authorizedRole([1]), routerEmp);
+app.use("/users", authenticate, authorizedRole([1]), routerUsu);
+app.use("/Suppliers", authenticate, authorizedRole([1, 2]), routerSupplier);
+app.use("/Sales", authenticate, authorizedRole([1, 2]), routerVenta);
+app.use("/Rows",authenticate, authorizedRole([1, 2]), routerRenglon);
+app.use("/mp", authenticate,routerMP);
+app.post("/category",authenticate ,authorizedRole([1, 2]),add);
 
 
 
