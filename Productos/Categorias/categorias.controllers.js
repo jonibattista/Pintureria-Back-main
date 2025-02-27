@@ -14,9 +14,9 @@ export const getAllCat = async (req, res) => {
 
 export const add = async (req, res) => {
     Category.sync()
-    const category = req.body;
+    const {description} = req.body;
     try {
-        const result = await Category.bulkCreate(category);
+        const result = await Category.create({description:description});
         res.status(201).json(result);
     } catch (error) {
         res.status(500).json({ message: "Error al agregar categorias." });

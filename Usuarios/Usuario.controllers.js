@@ -116,11 +116,31 @@ export const register = async (req, res) => {
       userName: userName,
       email: email,
       pswHash: hash,
+      role: 3,
+    });
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "Error en el registro de usuario" });
+  }
+};
+
+export const createUser = async (req, res) => {
+  const { userName, email, pswHash, role } = req.body;
+  const userExist = await User.findOne({ where: { userName: userName } });
+  if (userExist) return res.status(400).json({ message: "Nombre de usuario existente" });
+  const emialExist = await User.findOne({ where: { email: email } });
+  if (emialExist) return res.status(400).json({ message: "email existente" });
+  const hash = await bcrypt.hash(pswHash, 10);
+  try {
+    const result = await User.create({
+      userName: userName,
+      email: email,
+      pswHash: hash,
       role: role,
     });
     res.status(201).json(result);
   } catch (error) {
-    res.status(500).json({ message: "Error al ingresar el usuario" });
+    res.status(500).json({ message: "Error en el registro de usuario" });
   }
 };
 
