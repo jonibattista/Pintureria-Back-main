@@ -36,7 +36,7 @@ export const sendEmail = async (req, res) => {
 };
 
 export const searchToken = async (req, res) => {
-  Recover.sync({alter:true});
+  Recover.sync();
   const { token } = req.params;
   try {
     const response = await Recover.findOne({where:{token:token}});
