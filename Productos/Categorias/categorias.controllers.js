@@ -3,7 +3,7 @@ import { Category } from "./categorias.class.js";
 
 
 export const getAllCat = async (req, res) => {
-    Category.sync({alter:true})
+    Category.sync()
     try {
         const result = await Category.findAll();
         res.status(200).json(result);
@@ -25,12 +25,13 @@ export const add = async (req, res) => {
 
 export const update = async (req, res) => {
     Category.sync()
+    const {id} = req.params
     const {description, imgUrl} = req.body;
     try {
-        const result = await Category.update({description:description ,imgUrl:imgUrl});
+        const result = await Category.update({description:description ,imgUrl:imgUrl},{where:{id:id}});
         res.status(201).json(result);
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar categorias." });
+        res.status(500).json({ message: "Error al actualizar categoria",error });
     }
 };
 
