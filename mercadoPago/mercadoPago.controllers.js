@@ -4,7 +4,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 mercadopago.configure({
-    access_token: process.env.ACCESS_TOKEN_MERCADOPAGO || process.env.ACCESS_TOKEN_MERCADOPAGO_TEST,
+    access_token: process.env.ACCESS_TOKEN_MERCADOPAGO
 });
 
 export const createOrder = async (req, res) => {
@@ -23,9 +23,9 @@ export const createOrder = async (req, res) => {
         items: items,
         notification_url: process.env.URL + "/mp/webhook",
         back_urls: {
-          success: process.env.URL_FRONT + "/cartShop",
-          failure: process.env.URL_FRONT + "/cartShop",
-          pending: process.env.URL_FRONT + "/cartShop",
+          success: process.env.URL_FRONT + "/#/cartShop",
+          failure: process.env.URL_FRONT + "/#/cartShop",
+          pending: process.env.URL_FRONT + "/#/cartShop",
         },
       };
       const response = await mercadopago.preferences.create(preference);
