@@ -14,6 +14,17 @@ export const getAll = async (req, res) => {
     }
 };
 
+export const getByUserId = async (req, res) => {
+  Sale.sync()
+  const {idUser} = req.params
+  try {
+      const result = await Sale.findAll({where:{idUser:idUser}});
+      res.status(200).json(result);
+  } catch (error) {
+      res.status(500).json({ message: "Error al obtener las ventas." });
+  }
+};
+
 export const getOne = async (req, res) => {
     Sale.sync()
     const id = req.params.id;
@@ -25,7 +36,7 @@ export const getOne = async (req, res) => {
     }
 };
 
-export const add = async (req, res) => {
+export const addSale = async (req, res) => {
   Sale.sync();
   const trans = await sequelize.transaction();
   const { idClient, idEmp, idBranch, total, saleProds, paymentId , idUser} = req.body;

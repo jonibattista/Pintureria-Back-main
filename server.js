@@ -23,6 +23,7 @@ import { add, getAllCat, update } from "./Productos/Categorias/categorias.contro
 import { firstResponse } from "./firstResponse.js";
 import { publicRouterUser } from "./Usuarios/Usuario.PublicRoutes.js";
 import { upload, uploadImg } from "./Imagenes/images.controllers.js";
+import { addSale, getByUserId } from "./Ventas/Ventas.controllers.js";
 dotenv.config();
 
 
@@ -91,6 +92,8 @@ app.use("/users", publicRouterUser);
 
 
 // Rutas restringidas.
+app.post("/Sales",authenticate,addSale)
+app.get("/Sales/:idSale",authenticate,getByUserId)
 app.post("/upload" ,authenticate, authorizedRole([1, 2]),upload.single("imagen") ,uploadImg);
 app.get("/Rows/:id",authenticate ,getBySale);
 app.patch("/category/:id",authenticate ,authorizedRole([1, 2]),update);
