@@ -1,21 +1,21 @@
 ###  
 GET https://pintureria-back-main.onrender.com HTTP/1.1
 ###
-GET http://localhost:8080/Employees HTTP/1.1
+GET http://localhost:8080/employees HTTP/1.1
 ###
 GET http://localhost:8080/users HTTP/1.1
 ###
-GET https://pintureria-back-main.onrender.com/Suppliers HTTP/1.1
+GET https://pintureria-back-main.onrender.com/suppliers HTTP/1.1
 ###
 GET https://pintureria-back-main.onrender.com/category HTTP/1.1
 ###
-GET https://pintureria-back-main.onrender.com/Products HTTP/1.1
+GET https://pintureria-back-main.onrender.com/products HTTP/1.1
 ###
-GET http://localhost:8080/Clients HTTP/1.1
+GET http://localhost:8080/clients HTTP/1.1
 ###
-GET https://pintureria-back-main.onrender.com/Sales HTTP/1.1
+GET https://pintureria-back-main.onrender.com/sales HTTP/1.1
 ###
-GET https://pintureria-back-main.onrender.com/Rows HTTP/1.1
+GET https://pintureria-back-main.onrender.com/rows HTTP/1.1
 ###
 GET http://localhost:8080/recover HTTP/1.1
 ###
@@ -23,7 +23,7 @@ POST  http://localhost:8080/mp HTTP/1.1
 
 
 ###
-POST https://pintureria-back-main.onrender.com/Branches HTTP/1.1
+POST https://pintureria-back-main.onrender.com/branches HTTP/1.1
 Content-Type: application/json
 
 [
@@ -38,7 +38,7 @@ Content-Type: application/json
 ]
 
 ###
-POST http://localhost:8080/Employees HTTP/1.1
+POST http://localhost:8080/employees HTTP/1.1
 Content-Type: application/json
 
 [{
@@ -102,7 +102,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/Suppliers HTTP/1.1
+POST http://localhost:8080/suppliers HTTP/1.1
 Content-Type: application/json
 
 [{
@@ -140,7 +140,7 @@ Content-Type: application/json
 }] 
 
 ###
-POST http://localhost:8080/Clients HTTP/1.1
+POST http://localhost:8080/clients HTTP/1.1
 Content-Type: application/json
 
 {
@@ -151,4 +151,4 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8080/Sales/2 HTTP/1.1
+DELETE http://localhost:8080/sales/2 HTTP/1.1

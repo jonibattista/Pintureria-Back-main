@@ -5,8 +5,8 @@ export const firstResponse = {
                "method": "GET",
                "path": [
                    "/category", 
-                   "/Products/:id",
-                   "/Products",
+                   "/products/:id",
+                   "/products",
                    "/recover",
                    "/recover/:token"
                ],
