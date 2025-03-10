@@ -12,6 +12,7 @@ import { routerRenglon } from "./Ventas/Renglon/Renglon.routes";
 import { login, logout, register } from "./Usuarios/Usuario.controllers";
 import { authenticate, authorizedRole } from "./authenticate.middleware";
 import { routerMP } from "./mercadoPago/mercadoPago.routes";
+import { upload, uploadImg } from "./Imagenes/images.controllers";
 
 export const appRouter = Router()
 
