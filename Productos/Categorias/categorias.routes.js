@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { add, getAllCat, update } from "./categorias.controllers";
-import { authenticate, authorizedRole } from "../../authenticate.middleware";
+import { add, getAllCat, update } from "./categorias.controllers.js";
+import { authenticate, authorizedRole } from "../../authenticate.middleware.js";
 
 export const routerCat= Router()
 

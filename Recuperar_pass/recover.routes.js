@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { deleteToken, searchAllToken, searchToken, sendEmail } from "./recover.controllers";
+import { deleteToken, searchAllToken, searchToken, sendEmail } from "./recover.controllers.js";
 
 export const routerRecover = Router()
 

@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { routerCat } from "./Productos/Categorias/categorias.routes";
-import { routerProd } from "./Productos/Productos.routes";
-import { routerRecover } from "./Recuperar_pass/recover.routes";
-import { routerUsu } from "./Usuarios/Usuario.routes";
-import { routerSuc } from "./Sucursales/Sucursales.routes";
-import { routerCli } from "./Clientes/Cliente.routes";
-import { routerEmp } from "./Empleado/Empleados.routes";
-import { routerSupplier } from "./Proveedores/Proveedores.routes";
-import { routerVenta } from "./Ventas/Ventas.routes";
-import { routerRenglon } from "./Ventas/Renglon/Renglon.routes";
-import { login, logout, register } from "./Usuarios/Usuario.controllers";
-import { authenticate, authorizedRole } from "./authenticate.middleware";
-import { routerMP } from "./mercadoPago/mercadoPago.routes";
-import { upload, uploadImg } from "./Imagenes/images.controllers";
+import { routerCat } from "./Productos/Categorias/categorias.routes.js";
+import { routerProd } from "./Productos/Productos.routes.js";
+import { routerRecover } from "./Recuperar_pass/recover.routes.js";
+import { routerUsu } from "./Usuarios/Usuario.routes.js";
+import { routerSuc } from "./Sucursales/Sucursales.routes.js";
+import { routerCli } from "./Clientes/Cliente.routes.js";
+import { routerEmp } from "./Empleado/Empleados.routes.js";
+import { routerSupplier } from "./Proveedores/Proveedores.routes.js";
+import { routerVenta } from "./Ventas/Ventas.routes.js";
+import { routerRenglon } from "./Ventas/Renglon/Renglon.routes.js";
+import { login, logout, register } from "./Usuarios/Usuario.controllers.js";
+import { authenticate, authorizedRole } from "./authenticate.middleware.js";
+import { routerMP } from "./mercadoPago/mercadoPago.routes.js";
+import { upload, uploadImg } from "./Imagenes/images.controllers.js";
 
 export const appRouter = Router()
 

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { add, getAll, getBySale, remove, update } from './Renglon.controllers.js';
-import { authenticate } from '../../authenticate.middleware.js';
+import { authenticate, authorizedRole } from '../../authenticate.middleware.js';
 
 export const routerRenglon = Router();
 

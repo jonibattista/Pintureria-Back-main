@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken"
+
 // Middleware para autenticar la sesión del usuario.
 export const authenticate = (req, res, next) => {
   console.log("Cookies recibidas:", req.cookies); // Para verificar si la cookie llega al backend

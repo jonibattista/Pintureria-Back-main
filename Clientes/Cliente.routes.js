@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { add, getAll, getByDNI, remove, update } from './Cliente.controllers.js';
-import { authenticate } from '../authenticate.middleware.js';
+import { authenticate, authorizedRole } from '../authenticate.middleware.js';
 
 
 // Rutas para la tabla Client
