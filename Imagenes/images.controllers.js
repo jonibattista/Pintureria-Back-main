@@ -21,9 +21,17 @@ const storage = multer.diskStorage({
      }
  };
 
+ const limits = {
+    fileSize: 5 * 1024 * 1024, // 5 MB
+    files: 5, // Máximo 5 archivos
+  };
 
 //crea una instancia de multer pasandole la configuarion anterior
-export const upload = multer({ storage }); 
+export const upload = multer({ 
+    storage:storage,
+    fileFilter:fileFilter,
+    limits:limits
+ }); 
 
 export const uploadImg = (req, res) => {
     try {
