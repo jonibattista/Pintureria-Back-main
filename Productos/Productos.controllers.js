@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Product } from "./Productos.class.js";
 
 
@@ -16,6 +17,28 @@ export const getOne = async (req, res) => {
   const id = req.params.id;
   try {
     const result = await Product.findOne({ where: { id: id } });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "error al obtener el producto" });
+  }
+};
+
+export const getByCat = async (req, res) => {
+  Product.sync();
+  const idCat = req.params.idCat;
+  try {
+    const result = await Product.findAll({ where: { idCat: idCat } });
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: "error al obtener el producto" });
+  }
+};
+
+export const getByTitle = async (req, res) => {
+  Product.sync();
+  const title = req.params.title;
+  try {
+    const result = await Product.findAll({ where: { title: {[Op.like]:title} } });
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "error al obtener el producto" });
