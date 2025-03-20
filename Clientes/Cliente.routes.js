@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { add, getAll, getByDNI, remove, update } from './Cliente.controllers.js';
 import { authenticate, authorizedRole } from '../authenticate.middleware.js';
+import { validateNewClient, validateUpdateClient } from '../middlewares/validations/client.js';
 
 
 // Rutas para la tabla Client
@@ -11,6 +12,6 @@ routerCli.use(authorizedRole([1, 2]))
 
 routerCli.get('/', getAll);
 routerCli.get('/:id', getByDNI);
-routerCli.post('/', add);
-routerCli.patch('/:id', update);
+routerCli.post('/', validateNewClient ,add);
+routerCli.patch('/:id',validateUpdateClient ,update);
 routerCli.delete('/:id', remove);

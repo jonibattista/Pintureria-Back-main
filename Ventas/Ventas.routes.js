@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { addSale, getAll, getByUserId, getOne, remove, update } from './Ventas.controllers.js';
 import { authenticate, authorizedRole } from '../authenticate.middleware.js';
+import { validateNewSale } from '../middlewares/validations/sale.js';
 
 export const routerVenta = Router();
 
 routerVenta.use(authenticate)
 
-routerVenta.post("/",addSale)
+routerVenta.post("/", validateNewSale,addSale)
 routerVenta.get("/:idUser",getByUserId)
 
 

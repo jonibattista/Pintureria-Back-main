@@ -130,10 +130,6 @@ export const register = async (req, res) => {
 
 export const createUser = async (req, res) => {
   const { userName, email, pswHash, role } = req.body;
-  const userExist = await User.findOne({ where: { userName: userName } });
-  if (userExist) return res.status(400).json({ message: "Nombre de usuario existente" });
-  const emialExist = await User.findOne({ where: { email: email } });
-  if (emialExist) return res.status(400).json({ message: "email existente" });
   const hash = await bcrypt.hash(pswHash, 10);
   try {
     const result = await User.create({
@@ -150,14 +146,6 @@ export const createUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { userName, pswHash, role, email, id } = req.body;
-  if (userName) {
-    const existingUser = await User.findOne({ where: { userName: userName } });
-    if (existingUser && existingUser.id !== id) {
-      return res
-        .status(400)
-        .json({ message: "El nombre de usuario ya existe." });
-    }
-  }
   const hash = await bcrypt.hash(pswHash, 10);
   try {
     const whereClause = {};

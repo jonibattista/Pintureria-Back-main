@@ -24,42 +24,20 @@ export const getOne = async (req, res) => {
 
 export const add = async (req, res) => {
     Supplier.sync()
-    const suppliers = req.body;
-      if (Array.isArray(suppliers)){
-        try {
-          const result = await Supplier.bulkCreate(suppliers);
-          res.status(201).json(result);
-        } catch (error) {
-          res.status(500).json({ message: "Error al agregar proveedores." });
-        }
-     }else{
-         if (suppliers.cuit) {
-             const existingProv = await Supplier.findOne({ where: { cuit: suppliers.cuit } });
-             if (existingProv) {
-               return res.status(400).json({ message: "El CUIT ya existe." });
-             }
-           }
+    const { cuit, name, address, phone } = req.body;
          try {
-         const { cuit, name, address, phone } = req.body;
              const result = await Supplier.create({ cuit: cuit, name: name, address: address, phone: phone });
              res.status(201).json(result);
          } catch (error) {
              res.status(500).json({message: "Error al agregar el proveedor"});
          }
 
-     }
 };
 
 export const update = async (req, res) => {
     Supplier.sync()
     const { id } = req.params;
     const { cuit, name, address, phone } = req.body;
-    if (cuit) {
-        const existingProv = await Supplier.findOne({ where: { cuit: cuit } });
-        if (existingProv && existingProv.id !== id) {
-          return res.status(400).json({ message: "El CUIT ya existe." });
-        }
-      }
     try {
         const result = await Supplier.update({ cuit: cuit, name: name, address: address, phone: phone }, { where: { id: id } });
         res.status(200).json(result);

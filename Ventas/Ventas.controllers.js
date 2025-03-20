@@ -41,10 +41,6 @@ export const addSale = async (req, res) => {
   const trans = await sequelize.transaction();
   const { idClient, idEmp, idBranch, total, saleProds, paymentId , idUser} = req.body;
   try {
-    if (total === 0) {
-      await trans.rollback();
-      return res.status(500).json({ message: "La venta debe ser mayor a $1" });
-    }
     const sale = await Sale.create(
       {
         idUser: idUser,

@@ -27,12 +27,6 @@ export const getByDNI = async (req, res) => {
 export const add = async (req, res) => {
   await Client.sync();
   const { dni, name, address, phone } = req.body;
-  if (dni) {
-    const existingClient = await Client.findOne({ where: { dni: dni } });
-    if (existingClient) {
-      return res.status(400).json({ message: "El DNI ya existe." });
-    }
-  }
   try {
     const result = await Client.create({
       dni: dni,
@@ -48,15 +42,8 @@ export const add = async (req, res) => {
 
 export const update = async (req, res) => {
   await Client.sync();
-
   const { id } = req.params;
   const { dni, name, address, phone } = req.body;
-  if (dni) {
-    const existingClient = await Client.findOne({ where: { dni: dni } });
-    if (existingClient && existingClient.id !== id) {
-      return res.status(400).json({ message: "El DNI ya existe." });
-    }
-  }
   try {
     const result = await Client.update(
       { address: address, phone: phone, name: name, dni: dni },
