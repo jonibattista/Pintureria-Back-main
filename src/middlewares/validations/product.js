@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
+import { validateData } from './validationData.helper.js';
 import { Product } from '../../models/Productos.model.js';
 import { Op } from 'sequelize';
 

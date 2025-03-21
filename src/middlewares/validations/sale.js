@@ -1,9 +1,9 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
-import { Client } from '../../models/Cliente.model';
-import { User } from '../../models/Usuario.model';
-import { Branch } from '../../models/Sucursal.model';
-import { Employee } from '../../models/Empleados.model';
+import { validateData } from './validationData.helper.js';
+import { Client } from '../../models/Cliente.model.js';
+import { User } from '../../models/Usuario.model.js';
+import { Branch } from '../../models/Sucursal.model.js';
+import { Employee } from '../../models/Empleados.model.js';
 
 
 export const validateNewSale = [

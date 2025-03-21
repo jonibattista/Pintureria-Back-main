@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
+import { validateData } from './validationData.helper.js';
 import { Client } from '../../models/Cliente.model.js';
 
 
@@ -12,9 +12,10 @@ const findDNI = async (value) => {
 export const validateNewClient = [
   body('dni')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('DNI should not be empty')
+    .toInt()//se debe pasar a entero porque express-validator lo convierte a string
     .isInt().withMessage('DNI should be an integer')
     .bail()
-    .custom(findDNI),
+    .custom( async(value)=>{ await findDNI(value)}),
   body('name')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('name should not be empty')
     .isString().withMessage('name sould be a string'),
@@ -25,9 +26,11 @@ export const validateNewClient = [
 
 export const validateUpdateClient = [
     body('dni')
-      .optional().isInt().withMessage('DNI should be an integer')
+      .optional()
+      .toInt() //se debe pasar a entero porque express-validator lo convierte a string
+      .isInt().withMessage('DNI should be an integer')
       .bail()
-      .custom(findDNI),
+      .custom( async(value)=>{ await findDNI(value)}),        
     body('name').optional().isString().withMessage('name sould be a string'),
     body('address').optional().isString().withMessage('address should be a string'),
     body('phone').optional().isInt().withMessage('phone should be an integer'),

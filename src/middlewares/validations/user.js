@@ -1,8 +1,7 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
-
+import { validateData } from './validationData.helper.js';
 import { Op } from 'sequelize';
-import { User } from '../../models/Usuario.model';
+import { User } from '../../models/Usuario.model.js';
 
 const validatePassword = (password) =>{
     const UpperCase = /[A-Z]/.test(password);
@@ -25,7 +24,7 @@ export const validateNewUser = [
       .exists({checkFalsy:true}).not().isEmpty().withMessage('username should not be empty')
       .isString().withMessage('address should be a string')
       .bail()
-      .custom(findExisting('userName',value)),
+      .custom(async (value, { req }) => await findExisting('userName', value)),
     body('pswHash')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('password should not be empty')
       .isString().withMessage('password should be a string')
@@ -39,7 +38,7 @@ export const validateNewUser = [
       .exists({checkFalsy:true}).not().isEmpty().withMessage('email should not be empty')
       .isEmail().withMessage('email should be an email')
       .bail()
-      .custom(findExisting('email',value)),
+      .custom(async (value, { req }) => await findExisting('email', value)),
     body('role')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('role should not be empty')
       .isInt({min:1,max:3}).withMessage('role should be an integer between 1 and 3'),
@@ -51,7 +50,7 @@ export const validateUpdateUser = [
       .optional()
       .isString().withMessage('address should be a string')
       .bail()
-      .custom(findExisting('userName',value, req.params.id)),
+      .custom(async (value, { req }) => await findExisting('userName', value , req.params.id)),
     body('pswHash')
       .optional()
       .isString().withMessage('password should be a string')
@@ -65,7 +64,7 @@ export const validateUpdateUser = [
       .optional()
       .isEmail().withMessage('email should be an email')
       .bail()
-      .custom(findExisting('email',value, req.params.id)),
+      .custom(async (value, { req }) => await findExisting('email', value , req.params.id)),
     body('role')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('role should not be empty')
       .isInt({min:1,max:3}).withMessage('role should be an integer between 1 and 3'),

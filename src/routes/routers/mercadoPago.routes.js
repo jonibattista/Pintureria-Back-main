@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, failure, getOrder, pending, success, webhook } from "../../controllers/mercadoPago.controllers";
+import { createOrder, failure, getOrder, pending, success, webhook } from "../../controllers/mercadoPago.controllers.js";
 
 export const routerMP = Router()
 

@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { routerProd } from "../models/Productos.model.js";
-import { routerRecover } from "../models/recover.model.js";
-import { routerUsu } from "../models/Usuario.model.js";
-import { routerSuc } from "../models/Sucursal.model.js";
-import { routerCli } from "../models/Cliente.model.js";
-import { routerEmp } from "../models/Empleados.model.js";
-import { routerSupplier } from "../models/Proveedores.model.js";
-import { routerVenta } from "../models/Ventas.model.js";
-import { routerRenglon } from "../models/Renglon.model.js";
+import { routerProd } from "../routes/routers/Productos.routes.js";
+import { routerRecover } from "../routes/routers/recover.routes.js";
+import { routerUsu } from "../routes/routers/Usuario.routes.js";
+import { routerSuc } from "../routes/routers/Sucursales.routes.js";
+import { routerCli } from "../routes/routers/Cliente.routes.js";
+import { routerEmp } from "../routes/routers/Empleados.routes.js";
+import { routerSupplier } from "../routes/routers/Proveedores.routes.js";
+import { routerVenta } from "../routes/routers/Ventas.routes.js";
+import { routerRenglon } from "../routes/routers/Renglon.routes.js";
 import { routerCat } from "./routers/categorias.routes.js";
-import { login, logout, register } from "../models/Usuario.model.js";
+import { login, logout, register } from "../controllers/Usuario.controllers.js";
 import { authenticate, authorizedRole } from "../middlewares/authenticate.middleware.js";
-import { routerMP } from "../controllers/mercadoPago.controllers.js";
-import { upload, uploadImg } from "../controllers/upload.controllers.js";
+import { routerMP } from "../routes/routers/mercadoPago.routes.js";
+import { upload, uploadImg } from "../controllers/images.controllers.js";
 
 export const appRouter = Router()
 

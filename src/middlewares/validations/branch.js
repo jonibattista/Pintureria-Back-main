@@ -15,7 +15,7 @@ export const validateNewBranch = [
       .exists({checkFalsy:true}).not().isEmpty().withMessage('address should not be empty')
       .isString().withMessage('address should be a string')
       .bail()
-      .custom(findAddress),
+      .custom(async (value, { req }) => await findAddress(value)),
     body('phone')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('phone should not be empty')
       .isInt().withMessage('phone should be a string'),
@@ -26,7 +26,7 @@ export const validateUpdateBranch = [
     body('address')
       .optional().isString().withMessage('address should be a string')
       .bail()
-      .custom(findAddress, req.params.id),
+      .custom(async (value, { req }) => await findAddress(value, req.params.id)),
     body('phone').optional().isInt().withMessage('phone sould be a string'),
     validateData
 ];

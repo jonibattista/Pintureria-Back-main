@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { add, getAll, getOne, remove, update } from "../../controllers/Sucursales.controllers.js";
+import { add, getAll, getOne, remove, update } from "../../controllers/Sucursal.controllers.js";
 import { authenticate, authorizedRole } from "../../middlewares/authenticate.middleware.js";
 import { validateNewBranch, validateUpdateBranch } from "../../middlewares/validations/branch.js";
 

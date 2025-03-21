@@ -1,7 +1,7 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
+import { validateData } from './validationData.helper.js';
 import { Op } from 'sequelize';
-import { Supplier } from '../../models/Proveedores.model';
+import { Supplier } from '../../models/Proveedores.model.js';
 
 const findCuit = async ( value,excludeId = null) => {
   const whereClause = { cuit: value };
@@ -25,7 +25,7 @@ export const validateNewSupplier = [
       .exists({checkFalsy:true}).not().isEmpty().withMessage('CUIT should not be empty')
       .isInt().withMessage('CUIT should be an integer')
       .bail()
-      .custom(findCuit),
+      .custom(async (value, { req }) => await findCuit(value)),
     body('name')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('name should not be empty')
       .isString().withMessage('name should be a string'),
@@ -37,7 +37,7 @@ export const validateNewSupplier = [
       body('cuit')
         .optional().isInt().withMessage('DNI should be an integer')
         .bail()
-        .custom(findCuit, req.params.id),
+        .custom(async (value, { req }) => await findCuit(value,req.params.id)),
       body('name').optional().isString().withMessage('name sould be a string'),
       ...commonValidation,
       validateData

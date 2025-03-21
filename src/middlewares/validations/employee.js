@@ -1,5 +1,5 @@
 import { body } from 'express-validator';
-import { validateData } from './validationData.helper';
+import { validateData } from './validationData.helper.js';
 import { Employee } from '../../models/Empleados.model.js';
 import { Op } from 'sequelize';
 
@@ -17,7 +17,7 @@ export const validateNewEmployee = [
     .exists({checkFalsy:true}).not().isEmpty().withMessage('DNI should not be empty')
     .isInt().withMessage('DNI should be an integer')
     .bail()
-    .custom(findDNI),
+    .custom(async (value, { req }) => await findDNI(value)),
   body('name')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('name should not be empty')
     .isString().withMessage('name should be a string'),
@@ -32,7 +32,7 @@ export const validateUpdateEmployee = [
   body('dni')
     .optional().isInt().withMessage('DNI should be an integer')
     .bail()
-    .custom(findDNI, req.params.id),
+    .custom(async (value, { req }) => await findDNI(value,req.params.id)),
   body('name').optional().isString().withMessage('name should be a string'),
   body('salary').optional().isFloat().withMessage('salary should be a float'),
   body('phone').optional().isInt().withMessage('phone should be an integer'),

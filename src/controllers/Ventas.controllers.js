@@ -1,6 +1,6 @@
 import { Row } from "../models/Renglon.model.js";
 import { Sale } from "../models/Ventas.model.js";
-import { sequelize } from "../../BD.js";
+import { sequelize } from "../config/BD.js";
 import { Product } from "../models/Productos.model.js";
 
 
