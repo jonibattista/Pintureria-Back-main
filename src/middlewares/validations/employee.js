@@ -16,6 +16,7 @@ export const validateNewEmployee = [
   body('dni')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('DNI should not be empty')
     .isInt().withMessage('DNI should be an integer')
+    .toInt()
     .bail()
     .custom(async (value, { req }) => await findDNI(value)),
   body('name')
@@ -24,7 +25,7 @@ export const validateNewEmployee = [
   body('salary')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('salary should not be empty')
     .isFloat().withMessage('salary should be a float'),
-  body('phone').optional().isInt().withMessage('phone should be an integer'),
+  body('phone').optional().toInt().isInt().withMessage('phone should be an integer'),
   validateData
 ];
   
@@ -34,7 +35,7 @@ export const validateUpdateEmployee = [
     .bail()
     .custom(async (value, { req }) => await findDNI(value,req.params.id)),
   body('name').optional().isString().withMessage('name should be a string'),
-  body('salary').optional().isFloat().withMessage('salary should be a float'),
-  body('phone').optional().isInt().withMessage('phone should be an integer'),
+  body('salary').optional().toFloat().isFloat().withMessage('salary should be a float'),
+  body('phone').optional().toInt().isInt().withMessage('phone should be an integer'),
   validateData
 ];

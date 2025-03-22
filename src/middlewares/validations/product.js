@@ -36,18 +36,18 @@ export const validateNewProduct = [
     .isString().withMessage('title should be a string'),
   body('price')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('price should not be empty')
-    .isFloat().withMessage('price should be a float'),
+    .toFloat().isFloat().withMessage('price should be a float'),
   body('stock')
     .exists({checkFalsy:true}).not().isEmpty().withMessage('stock should not be empty')
-    .isInt().withMessage('stock should be a integer'),
+    .toInt().isInt().withMessage('stock should be a integer'),
   ...commonProductValidation,
   validateData
 ];
   
 export const validateUpdateProduct = [
   body('title').optional().isString().withMessage('title should be a string'),
-  body('price').optional().isFloat().withMessage('price should be a float'),
-  body('stock').optional().isInt().withMessage('stock should be a integer'),
+  body('price').optional().toFloat().isFloat().withMessage('price should be a float'),
+  body('stock').optional().toInt().isInt().withMessage('stock should be a integer'),
   ...commonProductValidation,
   validateData
 ];

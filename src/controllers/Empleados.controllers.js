@@ -29,7 +29,7 @@ export const add = async (req, res) => {
         name: name,
         phone: phone,
         dni: dni,
-        salary: salary,
+        salary: salary.toFixed(2),
       });
       res.status(201).json(result);
     } catch (error) {

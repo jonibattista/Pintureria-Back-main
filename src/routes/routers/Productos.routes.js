@@ -13,6 +13,6 @@ routerProd.get("/", getAll);
 routerProd.use(authenticate)
 routerProd.use(authorizedRole([1, 2]))
 
-routerProd.post('/', add);
-routerProd.patch('/:id',validateNewProduct, update);
-routerProd.delete('/:id', validateUpdateProduct,remove);
+routerProd.post('/',validateNewProduct, add);
+routerProd.patch('/:id',validateUpdateProduct, update);
+routerProd.delete('/:id', remove);

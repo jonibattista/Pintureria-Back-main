@@ -1,6 +1,7 @@
 import { body } from 'express-validator';
 import { Branch } from '../../models/Sucursal.model.js';
 import { validateData } from './validationData.helper.js';
+import { Op } from 'sequelize';
 
 const findAddress = async (value,excludId = null) => {
   const whereClause = { address: value };
@@ -27,6 +28,6 @@ export const validateUpdateBranch = [
       .optional().isString().withMessage('address should be a string')
       .bail()
       .custom(async (value, { req }) => await findAddress(value, req.params.id)),
-    body('phone').optional().isInt().withMessage('phone sould be a string'),
+    body('phone').optional().isInt().withMessage('phone should be an integer'),
     validateData
 ];

@@ -33,6 +33,7 @@ export const validateNewUser = [
         if(!validatePassword(value)){
           throw new Error('password should have at least 6 characters, one uppercase, one lowercase and one number');
         }
+        return true;
       }),
     body('email')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('email should not be empty')
@@ -40,7 +41,7 @@ export const validateNewUser = [
       .bail()
       .custom(async (value, { req }) => await findExisting('email', value)),
     body('role')
-      .exists({checkFalsy:true}).not().isEmpty().withMessage('role should not be empty')
+      .optional()
       .isInt({min:1,max:3}).withMessage('role should be an integer between 1 and 3'),
     validateData
 ];
@@ -59,6 +60,7 @@ export const validateUpdateUser = [
         if(!validatePassword(value)){
           throw new Error('password should have at least 6 characters, one uppercase, one lowercase and one number');
         }
+        return true;
       }),
     body('email')
       .optional()
@@ -66,7 +68,7 @@ export const validateUpdateUser = [
       .bail()
       .custom(async (value, { req }) => await findExisting('email', value , req.params.id)),
     body('role')
-      .exists({checkFalsy:true}).not().isEmpty().withMessage('role should not be empty')
+      .optional()
       .isInt({min:1,max:3}).withMessage('role should be an integer between 1 and 3'),
     validateData
 ];

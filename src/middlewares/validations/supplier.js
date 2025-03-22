@@ -17,13 +17,13 @@ const commonValidation = [
         const address = await Supplier.findOne({where: {address: value}}); 
         if(address)throw new Error('address already exists');  
       }),
-    body('phone').optional().isInt().withMessage('phone should be an integer'),
+    body('phone').optional().toInt().isInt().withMessage('phone should be an integer'),
 ]
 
 export const validateNewSupplier = [
     body('cuit')
       .exists({checkFalsy:true}).not().isEmpty().withMessage('CUIT should not be empty')
-      .isInt().withMessage('CUIT should be an integer')
+      .toInt().isInt().withMessage('CUIT should be an integer')
       .bail()
       .custom(async (value, { req }) => await findCuit(value)),
     body('name')
@@ -35,7 +35,7 @@ export const validateNewSupplier = [
   
   export const validateUpdateSupplier = [
       body('cuit')
-        .optional().isInt().withMessage('DNI should be an integer')
+        .optional().toInt().isInt().withMessage('CUIT should be an integer')
         .bail()
         .custom(async (value, { req }) => await findCuit(value,req.params.id)),
       body('name').optional().isString().withMessage('name sould be a string'),

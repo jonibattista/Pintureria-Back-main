@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
  // Acepta solo archivos de imagen
  const fileFilter = (req, file, cb) => {
      const ext = path.extname(file.originalname).toLowerCase();
-     if (ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".gif") {
+     if (ext === ".jpg" || ext === ".jpeg" || ext === ".png" || ext === ".gif" || ext === ".webp") {
          cb(null, true);
      } else {
          cb(new Error("Tipo de archivo no permitido"), false);

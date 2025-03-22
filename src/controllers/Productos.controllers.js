@@ -59,8 +59,8 @@ export const add = async (req, res) => {
         sku:sku,
         description: description,
         title: title,
-        price: price,
-        stock: stock,
+        price: parseFloat(price),
+        stock: parseInt(stock),
         idProv: idProv,
         idCat: idCat,
       });
