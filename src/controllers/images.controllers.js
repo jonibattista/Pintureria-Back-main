@@ -33,6 +33,16 @@ export const upload = multer({
     limits:limits
  }); 
 
+export const handleError = (err, req, res, next) => {
+    if (err instanceof multer.MulterError) {
+        return res.status(400).json({ error: err.message });
+    }
+    if (err) {
+        return res.status(500).json({ error: err.message });
+    }
+    next();
+};
+
 export const uploadImg = (req, res) => {
     try {
       if (!req.body) {

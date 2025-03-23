@@ -4,7 +4,8 @@ import jwt from "jsonwebtoken"
 export const authenticate = (req, res, next) => {
   console.log("Cookies recibidas:", req.cookies); // Para verificar si la cookie llega al backend
 
-  const token = req.cookies?.access_token; // Asegurarse de que cookies exista
+  // Busca el token en la cookie o en el header de la petición.
+  const token = req.cookies?.access_token || req.headers.authorization?.split(" ")[1];
 
   if (!token) {
     console.log("2 - No se encontró token en la cookie");

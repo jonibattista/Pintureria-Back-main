@@ -12,7 +12,7 @@ import { routerCat } from "./routers/categorias.routes.js";
 import { login, logout, register } from "../controllers/Usuario.controllers.js";
 import { authenticate, authorizedRole } from "../middlewares/authenticate.middleware.js";
 import { routerMP } from "../routes/routers/mercadoPago.routes.js";
-import { upload, uploadImg } from "../controllers/images.controllers.js";
+import { handleError, upload, uploadImg } from "../controllers/images.controllers.js";
 
 export const appRouter = Router()
 
@@ -31,7 +31,13 @@ appRouter.use("/employees", routerEmp);
 appRouter.use("/suppliers", routerSupplier);
 
 //ruta para cargar imagenes en la app
-appRouter.post("/upload" ,authenticate, authorizedRole([1, 2]),upload.single("imagen") ,uploadImg);
+appRouter.post("/upload",
+              authenticate, 
+              authorizedRole([1, 2]),
+              upload.single("imagen"),
+              handleError,
+              uploadImg
+            );
 
 appRouter.use("/mp", authenticate,routerMP);
 
