@@ -1,10 +1,3 @@
-import { Router } from "express";
-import { add, getAllCat, update } from "../../controllers/categorias.controllers.js";
-import { authenticate, authorizedRole } from "../../middlewares/authenticate.middleware.js";
-import { validateNewCat, validateUpdateCat } from "../../middlewares/validations/category.js";
-
-export const routerCat= Router()
-
 /**
  * @swagger
  * components:
@@ -28,6 +21,7 @@ export const routerCat= Router()
  *         id: 1
  *         name: "Accesorios"
  *         imgUrl: 1742759208236_z10.jpg
+ * 
  */
 /**
  * @swagger
@@ -53,10 +47,7 @@ export const routerCat= Router()
  *       500:
  *         description: Error al obtener las categorías
  */
-routerCat.get("/", getAllCat);
 
-routerCat.use(authenticate)
-routerCat.use(authorizedRole([1, 2]))
 /**
  * @swagger
  * /category:
@@ -79,7 +70,6 @@ routerCat.use(authorizedRole([1, 2]))
  *       500:
  *         description: Error al agregar la categoría
  */
-routerCat.post("/",validateNewCat,add);
 
 /**
  * @swagger
@@ -110,4 +100,3 @@ routerCat.post("/",validateNewCat,add);
  *       500:
  *         description: Error al actualizar la categoría
  */
-routerCat.patch("/:id",validateUpdateCat,update);

@@ -7,6 +7,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { firstResponse } from "./utils/firstResponse.js";
 import { appRouter } from "./routes/routes.js";
+import swaggerUI from "swagger-ui-express";
+import { specs } from "./config/swagger.js";
 dotenv.config();
 
 const port = process.env.PORT || 8080;
@@ -17,6 +19,7 @@ export const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use("/docs",swaggerUI.serve,swaggerUI.setup(specs))
 app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 
