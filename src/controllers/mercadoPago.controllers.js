@@ -37,6 +37,19 @@ export const createOrder = async (req, res) => {
   }else res.status(404).json({message:"Data undefined"})
 };
 
+export const getPayment = async (req,res) => {
+  const paymentId = req.params.id;
+  try {
+      const response = await mercadopago.payment.findById(paymentId);
+      if(response.body.status === "approved" && response.body.status_detail === "accredited") {
+        res.status(200).json(response.body);
+      }
+      res.status(404).json({message:"Payment not found"});
+  } catch (error) {
+      res.status(500).json({error:error.message});
+  }
+}
+
 export const webhook = async (req, res) => {
   try {
     const payment = req.query;
@@ -52,21 +65,5 @@ export const webhook = async (req, res) => {
     console.log(error);
     return res.status(500).json({ message: "Something goes wrong" });
   }
-};
-
-export const getOrder = async (req, res) => {
-    res.json("get order")
-};
-
-export const success = async (req, res) => {
-    res.json("success")
-};
-
-export const pending = async (req, res) => {
-    res.json("pending")
-};
-
-export const failure = async (req, res) => {
-    res.json("failure")
 };
 
