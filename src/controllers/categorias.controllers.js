@@ -31,7 +31,7 @@ export const update = async (req, res) => {
         const result = await Category.update({description:description ,imgUrl:imgUrl},{where:{id:id}});
         res.status(201).json(result);
     } catch (error) {
-        res.status(500).json({ message: "Error al actualizar categoria",error });
+        res.status(500).json({ message: "Error al actualizar categoria" });
     }
 };
 

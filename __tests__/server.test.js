@@ -1,6 +1,6 @@
-const request = require("supertest");
-const { app } = require("../src/server.js");
-const { firstResponse } = require("../src/utils/firstResponse.js");
+import request from "supertest";
+import { app } from "../src/server.js";
+
 
 // back/server.test.js
 

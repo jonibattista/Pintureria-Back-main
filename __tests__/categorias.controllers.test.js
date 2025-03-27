@@ -1,7 +1,9 @@
-const request = require("supertest");
-const express = require("express");
-const { getAllCat, add, update } = require("../src/controllers/categorias.controllers.js");
-const { Category } = require("../src/models/Categorias.model.js");
+import request from "supertest";
+import express from "express"
+import { getAllCat, add, update } from "../src/controllers/categorias.controllers.js";
+import { Category } from"../src/models/Categorias.model.js";
+import { afterAll, expect, jest } from '@jest/globals';
+
 
 const app = express();
 app.use(express.json());
@@ -15,25 +17,33 @@ const initialCategories = [
     {description: 'Category 3'}
 ]
 
-beforeEach(async() => {
-    const categories = await Category.findAll();
-    if(categories.length > 0) return;
-    await Category.bulkCreate(initialCategories);
+let existingCategories;
+
+beforeEach(async () => {
+    try {
+        console.log("Eliminando categorías...");
+        existingCategories = await Category.findAll();
+        await Category.destroy({ where: {}, truncate: true, force: true });
+        console.log("Categorías eliminadas. Insertando nuevas categorías...");
+        await Category.bulkCreate(initialCategories);
+        console.log("Categorías insertadas correctamente.");
+    } catch (error) {
+        console.error("Error en beforeEach:", error);
+    }
 });
 
 describe('Categorias Controllers', () => {
     describe('getAllCat', () => {
         it('should return all categories', async () => {
             const response = await request(app).get('/category');
-
+            console.log(response.body);
             expect(response.status).toBe(200);
-            expect(response.body.length).toBeGreaterThan(0);
+            expect(response.body.length).toEqual(initialCategories.length);
         });
 
         it('should handle errors', async () => {
-            jest.spyOn(Category, 'findAll').mockRejectedValue(new Error('Database error'));
+            Category.findAll = jest.fn().mockRejectedValue(new Error("Database error")); // Simulamos un error en la base de datos
             const response = await request(app).get('/category');
-
             expect(response.status).toBe(500);
             expect(response.body).toEqual({ message: 'error al obtener las categorias' });
         });
@@ -41,44 +51,37 @@ describe('Categorias Controllers', () => {
 
     describe('add', () => {
         it('should add a new category', async () => {
-            const newCategory = { description: 'New Category'};
-            const createdCategory = { id: 1, ...newCategory };
-            Category.create.mockResolvedValue(createdCategory);
-
+            const newCategory = { description: 'New Category', imgUrl: "image.jpg"};
+            const createdCategory = { id: initialCategories.length + 1, description: 'New Category', imgUrl: "image.jpg" };
             const response = await request(app).post('/category').send(newCategory);
-
+            const {description, imgUrl,id} = response.body;
+            expect(description).toEqual(createdCategory.description);
+            expect(id).toEqual(createdCategory.id);
+            expect(imgUrl).toEqual(createdCategory.imgUrl);
             expect(response.status).toBe(201);
-            expect(response.body).toEqual(createdCategory);
         });
 
         it('should handle errors', async () => {
-            jest.spyOn(Category, 'create').mockRejectedValue(new Error('Database error'));
-
+            Category.create =jest.fn().mockRejectedValue(new Error('Database error'));
             const response = await request(app).post('/category').send({ description: 'New Category', imgUrl: 'newUrl' });
-
             expect(response.status).toBe(500);
             expect(response.body).toEqual({ message: 'Error al agregar categorias.' });
         });
     });
 
-    // describe('update', () => {
-    //     it('should update a category', async () => {
-    //         const updatedCategory = { description: 'Updated Category', imgUrl: 'updatedUrl' };
-    //         Category.update.mockResolvedValue([1]);
+    describe('update', () => {
+        it('should update a category', async () => {
+            const updatedCategory = { description: 'Updated Category', imgUrl: 'updatedUrl' };
+            const response = await request(app).patch('/category/1').send(updatedCategory);
+            expect(response.status).toBe(201);
+            expect(response.body).toEqual([1]);
+        });
 
-    //         const response = await request(app).put('/categories/1').send(updatedCategory);
-
-    //         expect(response.status).toBe(201);
-    //         expect(response.body).toEqual([1]);
-    //     });
-
-    //     it('should handle errors', async () => {
-    //         Category.update.mockRejectedValue(new Error('Database error'));
-
-    //         const response = await request(app).put('/categories/1').send({ description: 'Updated Category', imgUrl: 'updatedUrl' });
-
-    //         expect(response.status).toBe(500);
-    //         expect(response.body).toEqual({ message: 'Error al actualizar categoria', error: 'Database error' });
-    //     });
-    // });
+        it('should handle errors', async () => {
+            Category.update = jest.fn().mockRejectedValue(new Error('Database error'));
+            const response = await request(app).patch('/category/1').send({ description: 'Updated Category', imgUrl: 'updatedUrl' });
+            expect(response.status).toBe(500);
+            expect(response.body).toEqual({ message: "Error al actualizar categoria" });
+        });
+    });
 });

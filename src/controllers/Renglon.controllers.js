@@ -12,7 +12,7 @@ export const getAll = async (req, res) => {
 };
 
 export const getBySale = async (req, res) => {
-    Row.sync()
+    Row.sync({alter:true})
     const id = req.params.id;
     try {
         const result = await Row.findAll({ where: { idSale: id } });
