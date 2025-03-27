@@ -5,13 +5,13 @@ import { validateNewSale } from '../../middlewares/validations/sale.js';
 
 export const routerVenta = Router();
 
-// routerVenta.use(authenticate)
+routerVenta.use(authenticate)
 
 routerVenta.post("/", validateNewSale,addSale)
 routerVenta.get("/:idUser",getByUserId)
 
 
-// routerVenta.use(authorizedRole([1,2]))
+routerVenta.use(authorizedRole([1,2]))
 
 routerVenta.get('/', getAll);
 routerVenta.get('/:id', getOne);

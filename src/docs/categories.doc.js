@@ -27,17 +27,17 @@
  * @swagger
  * tags:
  *   name: Categories
- *   description: Manejo de las categorías de productos
+ *   description: handlers for categories
  */
 /**
  * @swagger
  * /category:
  *   get:
- *     summary: Obtiene todas las categorías
+ *     summary: get all categories
  *     tags: [Categories]
  *     responses:
  *       200:
- *         description: Lista de todas las categorías
+ *         description: list of categories
  *         content:
  *           application/json:
  *             schema:
@@ -45,14 +45,14 @@
  *               items:
  *                 $ref: '#/components/schemas/Category'
  *       500:
- *         description: Error al obtener las categorías
+ *         description: Error getting categories
  */
 
 /**
  * @swagger
  * /category:
  *   post:
- *     summary: Agrega una nueva categoría
+ *     summary: add a new category
  *     tags: [Categories]
  *     requestBody:
  *       required: true
@@ -60,22 +60,25 @@
  *         application/json:
  *           schema:
  *             $ref: '#/components/schemas/Category'
+ *     security:
+ *       - BearerAuth: []  
+ *       - CookieAuth: []
  *     responses:
  *       201:
- *         description: Categoría creada exitosamente
+ *         description: vategory added successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Category'
  *       500:
- *         description: Error al agregar la categoría
+ *         description: Error adding category
  */
 
 /**
  * @swagger
  * /category/{id}:
  *   patch:
- *     summary: Actualiza una categoría existente
+ *     summary: update a category
  *     tags: [Categories]
  *     parameters:
  *       - in: path
@@ -83,7 +86,10 @@
  *         schema:
  *           type: integer
  *         required: true
- *         description: ID de la categoría a actualizar
+ *         description: ID of the category to update
+ *     security:
+ *       - BearerAuth: []  
+ *       - CookieAuth: [] 
  *     requestBody:
  *       required: true
  *       content:
@@ -92,11 +98,11 @@
  *             $ref: '#/components/schemas/Category'
  *     responses:
  *       201:
- *         description: Categoría actualizada exitosamente
+ *         description: Category updated successfully
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Category'
  *       500:
- *         description: Error al actualizar la categoría
+ *         description: Error updating category
  */

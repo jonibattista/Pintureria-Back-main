@@ -16,14 +16,16 @@ Row.init(
       references: {
         model: "sales",
         key: "id",
+        onDelete: "CASCADE",
       },
     },
     idProduct: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
         model: "products",
         key: "id",
+        onDelete: "SET NULL",
       },
     },
     title: {
