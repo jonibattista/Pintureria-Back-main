@@ -5,7 +5,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-import { firstResponse } from "./utils/firstResponse.js";
 import { appRouter } from "./routes/routes.js";
 import swaggerUI from "swagger-ui-express";
 import { specs } from "./config/swagger.js";
@@ -35,7 +34,7 @@ app.use(appRouter)
 
 // Ruta para verificar el estado de la API.
 app.get("/", (req, res) => {
-  res.status(200).json(firstResponse);
+  res.status(200).json({"message": "API Pintureria" });
 });
 
 //Middleware para manejar errores 404.
