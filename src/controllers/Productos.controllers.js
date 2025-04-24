@@ -38,7 +38,8 @@ export const getByTitle = async (req, res) => {
   Product.sync();
   const title = req.params.title;
   try {
-    const result = await Product.findAll({ where: { title: {[Op.like]:title} } });
+    const result = await Product.findAll({ where: { title: { [Op.like]: `%${title}%` } } });
+    console.log(result)
     res.status(200).json(result);
   } catch (error) {
     res.status(500).json({ message: "error al obtener el producto" });

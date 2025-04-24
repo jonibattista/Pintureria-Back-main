@@ -6,8 +6,8 @@ import { add, getAll, getOne, getByCat, getByTitle, remove, update } from '../..
 export const routerProd = Router();
 
 routerProd.get("/:id", getOne);
-routerProd.get("/:idCat", getByCat);
-routerProd.get("/:title", getByTitle);
+routerProd.get("/category/:idCat", getByCat);
+routerProd.get("/title/:title", getByTitle);
 routerProd.get("/", getAll);
 
 routerProd.use(authenticate)
